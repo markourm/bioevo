@@ -1,0 +1,6 @@
+version: '2'
+services:
+  bioevo:
+      image: markourm/bioevo-service:tag1
+      ports:
+        - "8080:8080"
