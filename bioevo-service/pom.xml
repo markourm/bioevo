@@ -2,31 +2,19 @@
 <project xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://maven.apache.org/POM/4.0.0" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
   <modelVersion>4.0.0</modelVersion>
 
-  <groupId>org.tondu</groupId>
-  <artifactId>bioevo</artifactId>
-  <version>0.0.1-SNAPSHOT</version>
+  <artifactId>bioevo-service</artifactId>
   <packaging>jar</packaging>
 
-  <name>BioEvo</name>
+  <name>BioEvo Service</name>
   <description>Tetrapod Evolution Simulator</description>
 
   <parent>
-    <groupId>org.springframework.boot</groupId>
-    <artifactId>spring-boot-starter-parent</artifactId>
-    <version>2.0.2.RELEASE</version>
-    <relativePath/>
-  </parent>
-  <dependencies>
-    <dependency>
-      <groupId>org.springframework.boot</groupId>
-      <artifactId>spring-boot-starter-web</artifactId>
-    </dependency>
-  </dependencies>
+    <groupId>org.tondu</groupId>
+    <artifactId>bioevo-parent-pom</artifactId>
+    <version>0.0.1-SNAPSHOT</version>
+  </parent>    
 
   <properties>
-    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-    <java.version>10</java.version>
-    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <start-class>org.tondu.bioevo.Application</start-class>
     <docker.image.name>markourm/bioevo-service</docker.image.name>
     <docker.image.tag>tag1</docker.image.tag>
@@ -68,4 +56,12 @@
       </plugin>
     </plugins>
   </build>
+  
+  <dependencies>
+    <dependency>
+      <groupId>org.springframework.boot</groupId>
+      <artifactId>spring-boot-starter-web</artifactId>
+    </dependency>
+  </dependencies>
+  
 </project>
