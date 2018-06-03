@@ -3,29 +3,27 @@
   <modelVersion>4.0.0</modelVersion>
 
   <groupId>org.tondu</groupId>
-  <version>0.0.1-SNAPSHOT</version>
   <artifactId>bioevo-parent-pom</artifactId>
+  <version>0.0.1-SNAPSHOT</version>
   <packaging>pom</packaging>
 
-
   <name>bioevo-parent-pom</name>
-  <description>Parent Pom for the BioEvo project</description>
-
+  <description>Parent pom for the BioEvo project</description>
+  
   <parent>
     <groupId>org.springframework.boot</groupId>
     <artifactId>spring-boot-starter-parent</artifactId>
     <version>2.0.2.RELEASE</version>
+    <relativePath/>
   </parent>
+  
+  <properties>
+    <java.version>10</java.version>
+    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>    
+  </properties>
+  
   <modules>
-    <module>bioevo</module>
+    <module>bioevo-service</module>
   </modules>
-  <build>
-    <plugins>
-    	<plugin>
-	        <groupId>com.spotify</groupId>
-	        <artifactId>dockerfile-maven-plugin</artifactId>
-	        <version>1.4.0</version>	        
-	    </plugin>
-    </plugins>
-  </build>
+
 </project>
