@@ -15,7 +15,7 @@
   </parent>    
 
   <properties>
-    <start-class>org.tondu.bioevo.Application</start-class>
+    <start-class>org.tondu.bioevo.BioEvoServiceApplication</start-class>
     <docker.image.name>markourm/bioevo-service</docker.image.name>
     <docker.image.tag>tag1</docker.image.tag>
   </properties>

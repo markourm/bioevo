@@ -7,7 +7,7 @@
 	</configSuffixes>
 	<enableImports><![CDATA[false]]></enableImports>
 	<configs>
-		<config>java:org.tondu.bioevo.Application</config>
+		<config>java:org.tondu.bioevo.BioEvoServiceApplication</config>
 	</configs>
 	<autoconfigs>
 	</autoconfigs>
