@@ -24,6 +24,7 @@
   
   <modules>
     <module>bioevo-service</module>
+    <module>bioevo-client</module>
   </modules>
 
 </project>
