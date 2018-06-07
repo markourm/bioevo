@@ -1,10 +1,14 @@
 # Compiled class file
 *.class
 
-# Eclipse project files
-.classpath
+# IDEs and editors
+/.idea
 .project
+.classpath
+.c9/
+*.launch
 .settings/
+*.sublime-workspace
 
 # Log file
 *.log
@@ -29,3 +33,40 @@ hs_err_pid*
 
 /target
 **/target/
+
+# compiled output
+/dist
+**/dist/
+/tmp
+**/tmp/
+/out-tsc
+**/out-tsc/
+
+# dependencies
+/node_modules
+**/node_modules/
+
+# IDE - VSCode
+.vscode/*
+!.vscode/settings.json
+!.vscode/tasks.json
+!.vscode/launch.json
+!.vscode/extensions.json
+
+# misc
+/.sass-cache
+**/.sass-cache/
+/connect.lock
+connect.lock
+/coverage
+**/coverage/
+/libpeerconnection.log
+npm-debug.log
+yarn-error.log
+testem.log
+/typings
+**/typings/
+
+# System Files
+.DS_Store
+Thumbs.db
