@@ -1,8 +1,12 @@
 # Stage 0, based on Node.js, to build and compile Angular
 FROM node:10.4 as node
+
+# install and cache app dependencies
 WORKDIR /app
 COPY package.json /app/
 RUN npm install
+
+# add app
 COPY ./ /app/
 ARG env=production
 RUN npm run build -- --prod --configuration $env
