@@ -14,5 +14,9 @@ RUN npm run build -- --prod --configuration $env
 # Stage 1, based on Nginx, to have only the compiled app, ready for production with Nginx
 FROM nginx:1.15-alpine
 MAINTAINER Marko Urm <markourm@gmail.com>
-COPY --from=node /app/dist/ /usr/share/nginx/html
+
+# Remove default nginx website
+RUN rm -rf /usr/share/nginx/html/*
+
+COPY --from=node /app/dist /usr/share/nginx/html
 COPY ./nginx-custom.conf /etc/nginx/conf.d/default.conf

@@ -1,99 +1,167 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
-  <modelVersion>4.0.0</modelVersion>
-  
-  <parent>
-    <groupId>org.tondu</groupId>
-    <artifactId>bioevo-parent-pom</artifactId>
-    <version>0.0.1-SNAPSHOT</version>
-  </parent>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
 
-  <artifactId>bioevo-client</artifactId>
-  
-  <name>BioEvo Client</name>
-  <description>Web frontend for BioEvo application</description>
+	<parent>
+		<groupId>org.tondu</groupId>
+		<artifactId>bioevo-parent-pom</artifactId>
+		<version>0.0.1-SNAPSHOT</version>
+	</parent>
 
-  <properties>
-    <docker.image.name>markourm/bioevo-client</docker.image.name>
-    <docker.image.tag>tag1</docker.image.tag>
-  </properties>
+	<artifactId>bioevo-client</artifactId>
 
-  <build>
-    
-    <plugins>
-    
-<!--      <plugin>
-        <artifactId>maven-clean-plugin</artifactId>
-        <version>3.1.0</version>
-        <configuration>
-          <filesets>
-            <fileset>
-              <directory>dist</directory>
-              <includes>
-                <include>*</include>
-              </includes>
-            </fileset>
-          </filesets>
-        </configuration>
-      </plugin>
-    
-       <plugin>
-        <groupId>com.github.eirslett</groupId>
-        <artifactId>frontend-maven-plugin</artifactId>
-        <version>1.6</version>
-        <executions>
-        
-          <execution>
-            <id>install node and npm</id>
-            <goals>
-              <goal>install-node-and-npm</goal>
-            </goals>
-            <configuration>
-              <nodeVersion>v10.3.0</nodeVersion>
-              <npmVersion>6.1.0</npmVersion>
-            </configuration>
-          </execution>
+	<name>BioEvo Client</name>
+	<description>Web frontend for BioEvo application</description>
 
-          <execution>
-             <id>npm run build</id>
-            <goals>
-              <goal>npm</goal>
-            </goals>
-            <configuration>
-              <arguments>run build</arguments>
-            </configuration>
-          </execution>
+	<properties>
+		<docker.image.name>markourm/bioevo-client</docker.image.name>
+		<docker.image.tag>tag1</docker.image.tag>
+		<checkstyle.skip>true</checkstyle.skip>
+	</properties>
 
-        </executions>
-      </plugin>-->
-      
-      <plugin>
-        <groupId>com.spotify</groupId>
-        <artifactId>dockerfile-maven-plugin</artifactId>
-        <version>1.4.0</version>
-        <executions>
-		    <execution>
-		      <id>default</id>
-		      <goals>
-		        <goal>build</goal>
-		        <goal>push</goal>
-		      </goals>
-		    </execution>
-		</executions>
-		<configuration>
-		    <repository>${docker.image.name}</repository>
-		    <tag>${docker.image.tag}</tag>
-		</configuration>
-		<dependencies>
-			<dependency>
-				<groupId>javax.activation</groupId>
-				<artifactId>activation</artifactId>
-				<version>1.1.1</version>
-			</dependency>
-		</dependencies>
-      </plugin>
-      
-    </plugins>
-  </build>
+	<build>
+
+		<plugins>
+
+			<plugin> 
+				<artifactId>maven-clean-plugin</artifactId> 
+				<version>3.1.0</version> 
+				<configuration> 
+					<filesets> 
+						<fileset> 
+							<directory>dist</directory> 
+							<includes> 
+								<include>*</include> 
+							</includes> 
+						</fileset>
+					</filesets> 
+				</configuration> 
+			</plugin>
+			
+			<plugin>
+				<groupId>org.codehaus.mojo</groupId>
+				<artifactId>exec-maven-plugin</artifactId>
+				<version>1.6.0</version>
+				<executions>
+					<execution>
+						<id>karma tests</id>
+						<phase>test</phase>
+						<goals>
+							<goal>exec</goal>
+						</goals>
+						<configuration>
+							<executable>ng</executable>
+							<workingDirectory>${project.basedir}</workingDirectory>
+							<arguments>
+			                    <argument>test</argument>
+			                    <argument>--watch=false</argument>
+			                </arguments>
+							<skip>${skipTests}</skip>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
+
+			<plugin>
+				<groupId>com.github.eirslett</groupId>
+				<artifactId>frontend-maven-plugin</artifactId>
+				<version>1.6</version>
+				<configuration>
+			        <installDirectory>target</installDirectory>
+			    </configuration>
+				<executions>
+
+					<execution>
+						<id>install node and npm</id>
+						<goals>
+							<goal>install-node-and-npm</goal>
+						</goals>
+						<configuration>
+							<nodeVersion>v10.4.0</nodeVersion>
+						</configuration>
+					</execution>
+
+					<!-- <execution>
+						<id>npm run build</id>
+						<goals>
+							<goal>npm</goal>
+						</goals>
+						<configuration>
+							<arguments>run build</arguments>
+						</configuration>
+					</execution>-->
+
+					<execution>
+						<id>npm-install</id>
+						<goals>
+							<goal>npm</goal>
+						</goals>
+					</execution>
+					
+					<execution>
+						<id>npm-build</id>
+						<goals>
+							<goal>npm</goal>
+						</goals>
+						<configuration>
+							<arguments>run-script build</arguments>
+						</configuration>
+					</execution>
+					
+					<!-- disabled due to https://github.com/angular/angular-cli/issues/10703
+					<execution>
+					    <id>javascript tests</id>
+					    <goals>
+					        <goal>karma</goal>
+					    </goals>					
+					    <configuration>
+					        <karmaConfPath>src/karma.conf.js</karmaConfPath>
+					    </configuration>
+					</execution> -->
+					
+					<execution>
+						<id>npm-test</id>
+						<goals>
+							<goal>npm</goal>
+						</goals>
+						<configuration>
+							<arguments>run-script e2e</arguments>
+						</configuration>
+						<phase>test</phase>
+					</execution>
+
+				</executions>
+			</plugin>			
+
+			<plugin>
+				<groupId>com.spotify</groupId>
+				<artifactId>dockerfile-maven-plugin</artifactId>
+				<version>1.4.0</version>
+				<executions>
+					<execution>
+						<id>default</id>
+						<goals>
+							<goal>build</goal>
+							<goal>push</goal>
+						</goals>
+					</execution>
+				</executions>
+				<configuration>
+					<repository>${docker.image.name}</repository>
+					<tag>${docker.image.tag}</tag>
+				</configuration>
+				<dependencies>
+					<dependency>
+						<groupId>javax.activation</groupId>
+						<artifactId>activation</artifactId>
+						<version>1.1.1</version>
+					</dependency>
+				</dependencies>
+			</plugin>
+
+		</plugins>
+	</build>
 
 </project>
