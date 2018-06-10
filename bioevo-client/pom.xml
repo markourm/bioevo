@@ -11,6 +11,7 @@
 	</parent>
 
 	<artifactId>bioevo-client</artifactId>
+	<packaging>pom</packaging>
 
 	<name>BioEvo Client</name>
 	<description>Web frontend for BioEvo application</description>
@@ -83,16 +84,6 @@
 						</configuration>
 					</execution>
 
-					<!-- <execution>
-						<id>npm run build</id>
-						<goals>
-							<goal>npm</goal>
-						</goals>
-						<configuration>
-							<arguments>run build</arguments>
-						</configuration>
-					</execution>-->
-
 					<execution>
 						<id>npm-install</id>
 						<goals>
@@ -106,13 +97,13 @@
 							<goal>npm</goal>
 						</goals>
 						<configuration>
-							<arguments>run-script build</arguments>
+							<arguments>run build</arguments>
 						</configuration>
 					</execution>
 					
 					<!-- disabled due to https://github.com/angular/angular-cli/issues/10703
 					<execution>
-					    <id>javascript tests</id>
+					    <id>karma tests</id>
 					    <goals>
 					        <goal>karma</goal>
 					    </goals>					
@@ -122,12 +113,12 @@
 					</execution> -->
 					
 					<execution>
-						<id>npm-test</id>
+						<id>protractor tests</id>
 						<goals>
 							<goal>npm</goal>
 						</goals>
 						<configuration>
-							<arguments>run-script e2e</arguments>
+							<arguments>run e2e</arguments>
 						</configuration>
 						<phase>test</phase>
 					</execution>
@@ -160,6 +151,14 @@
 					</dependency>
 				</dependencies>
 			</plugin>
+			
+			<plugin>
+            	<groupId>com.dkanejs.maven.plugins</groupId>
+	            <artifactId>docker-compose-maven-plugin</artifactId>
+				<configuration>
+	                <skip>true</skip>
+	            </configuration>	            
+	        </plugin>
 
 		</plugins>
 	</build>

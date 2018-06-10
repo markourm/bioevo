@@ -24,10 +24,10 @@ Angular CLI 6.x:
 ## Build and deploy
 
 ./mvnw clean install
-docker-compose -f etc/docker-compose.yml up
+./docker-compose-up
 
 Visit http://localhost/
 
 ## Stop and remove the docker containers
 
-docker-compose -f etc/docker-compose.yml down
+./docker-compose-down
