@@ -1,10 +1,12 @@
-version: '2'
+version: '3'
 services:
   bioevo:
       image: markourm/bioevo-service:tag1
       ports:
         - "8080:8080"
-  frontend:
+  client:
       image: markourm/bioevo-client:tag1
       ports:
         - "80:80"
+      depends_on:
+        - bioevo

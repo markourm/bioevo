@@ -1,14 +1,28 @@
 # Compiled class file
 *.class
 
-# IDEs and editors
-/.idea
-.project
+### STS ###
+.apt_generated
 .classpath
-.c9/
-*.launch
-.settings/
-*.sublime-workspace
+.factorypath
+.project
+.settings
+.springBeans
+.sts4-cache
+
+### IntelliJ IDEA ###
+.idea
+*.iws
+*.iml
+*.ipr
+
+### NetBeans ###
+/nbproject/private/
+/build/
+/nbbuild/
+/dist/
+/nbdist/
+/.nb-gradle/
 
 # Log file
 *.log
@@ -66,6 +80,10 @@ yarn-error.log
 testem.log
 /typings
 **/typings/
+!.mvn/wrapper/maven-wrapper.jar
+.c9/
+*.launch
+*.sublime-workspace
 
 # System Files
 .DS_Store

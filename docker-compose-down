@@ -1,0 +1,2 @@
+#!/bin/sh
+./mvnw "com.dkanejs.maven.plugins:docker-compose-maven-plugin:down"
