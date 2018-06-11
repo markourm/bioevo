@@ -1,8 +1,8 @@
 package org.tondu.bioevo.controller;
 
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 import org.tondu.bioevo.model.World;
 
@@ -15,11 +15,11 @@ import org.tondu.bioevo.model.World;
 @RequestMapping(value="/v1/report")
 public class ReportController {
 
-    @RequestMapping(value="/{worldId}/{step}",method = RequestMethod.GET)
-    public World worldState(@PathVariable("worldId") long worldId, @PathVariable("step") int step) {
+    @GetMapping( "/{worldId}/{stepId}" )
+    public World worldState(@PathVariable("worldId") long worldId, @PathVariable("stepId") int stepId) {
 
         World world = new World( worldId );
-        world.setCurrentStep( step );
+        world.setCurrentStepId( stepId );
         return world;
     }
     
