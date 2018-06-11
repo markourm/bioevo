@@ -7,8 +7,10 @@ package org.tondu.bioevo.model;
  */
 public class World {
 
-    private final long id;
-    private int currentStep;
+    private long id;
+    private int currentStepId;
+    
+    public World() {}
     
     public World(long id) {
         this.id = id;
@@ -17,13 +19,17 @@ public class World {
     public long getId() {
         return id;
     }
+    
+    public void setId(long id) {
+        this.id = id;
+    }
 
-    public int getCurrentStep() {
-        return currentStep;
+    public int getCurrentStepId() {
+        return currentStepId;
     }
     
-    public void setCurrentStep(int currentStep) {
-        this.currentStep = currentStep;
+    public void setCurrentStepId(int currentStepId) {
+        this.currentStepId = currentStepId;
     }
     
 }
