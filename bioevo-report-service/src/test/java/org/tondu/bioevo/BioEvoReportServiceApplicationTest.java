@@ -6,15 +6,15 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 /**
- * Tests for {@link BioEvoServiceApplication}.
+ * Tests for {@link BioEvoReportServiceApplication}.
  *
  * @author Marko Urm
  */
 @ExtendWith(SpringExtension.class)
 @SpringBootTest
-public class BioevoServiceApplicationTest {
+public class BioEvoReportServiceApplicationTest {
 
-	@Test
-	public void shouldLoadApplicationContext() {}
+    @Test
+    public void shouldLoadApplicationContext() {}
 
 }

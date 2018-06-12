@@ -31,5 +31,10 @@ public class World {
     public void setCurrentStepId(int currentStepId) {
         this.currentStepId = currentStepId;
     }
+
+    @Override
+    public String toString() {
+        return "World [id=" + id + ", currentStepId=" + currentStepId + "]";
+    }
     
 }

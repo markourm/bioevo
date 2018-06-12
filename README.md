@@ -15,11 +15,13 @@ Requires following to be installed on target system:
 [Node.js 10.x](https://nodejs.org/en/)
 
 Angular CLI 6.x:
+
 `npm install -g @angular/cli@">=6.0.0 <7.0.0"`
 
 ## Build and deploy
 
 `./mvnw clean install`
+
 `./docker-compose-up`
 
 Visit http://localhost/

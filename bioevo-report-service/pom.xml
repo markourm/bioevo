@@ -10,15 +10,15 @@
 		<version>0.0.1-SNAPSHOT</version>
 	</parent>
 
-	<artifactId>bioevo-service</artifactId>
+	<artifactId>bioevo-report-service</artifactId>
 	<packaging>jar</packaging>
 
-	<name>BioEvo Service</name>
-	<description>Tetrapod Evolution Simulator</description>
+	<name>BioEvo Report Service</name>
+	<description>Report Service for BioEvo</description>
 
 	<properties>
-		<start-class>org.tondu.bioevo.BioEvoServiceApplication</start-class>
-		<docker.image.name>markourm/bioevo-service</docker.image.name>
+		<start-class>org.tondu.bioevo.BioEvoReportServiceApplication</start-class>
+		<docker.image.name>markourm/bioevo-report-service</docker.image.name>
 		<docker.image.tag>tag1</docker.image.tag>
 	</properties>
 
