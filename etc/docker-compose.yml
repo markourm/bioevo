@@ -4,6 +4,10 @@ services:
       image: markourm/bioevo-service:tag1
       ports:
         - "8080:8080"
+  report:
+      image: markourm/bioevo-report-service:tag1
+      ports:
+        - "8081:8081"
   client:
       image: markourm/bioevo-client:tag1
       ports:

@@ -1,4 +1,4 @@
-package org.tondu.bioevo.model;
+package org.tondu.bioevo.api.request;
 
 /**
  * Encapsulates criteria defining when step calculation should be stopped.
@@ -15,6 +15,11 @@ public class StepCriteria {
     
     public void setStepCount(int stepCount) {
         this.stepCount = stepCount;
+    }
+
+    @Override
+    public String toString() {
+        return "StepCriteria [stepCount=" + stepCount + "]";
     }
     
 }
