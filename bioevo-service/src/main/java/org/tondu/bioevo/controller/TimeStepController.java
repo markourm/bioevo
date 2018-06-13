@@ -2,14 +2,14 @@ package org.tondu.bioevo.controller;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import org.tondu.bioevo.api.request.StepCriteria;
-import org.tondu.bioevo.api.response.DoStepResponse;
+import org.tondu.bioevo.api.request.DoStepsRequest;
+import org.tondu.bioevo.api.response.DoStepsResponse;
 
 /**
  * Controller handling requests to compute next time steps. 
@@ -17,35 +17,36 @@ import org.tondu.bioevo.api.response.DoStepResponse;
  * @author Marko Urm
  */
 @RestController
+@CrossOrigin("${bioevo.service.crossorigin.origins}")
 @RequestMapping(value = "/v1/{worldId}/step")
 public class TimeStepController {
     
-    private static final Logger LOGGER = LoggerFactory.getLogger( TimeStepController.class );
+    private static final Logger LOG = LoggerFactory.getLogger( TimeStepController.class );
 
-    @GetMapping( "/{steps}" )
-    public DoStepResponse doSteps(@PathVariable("worldId") long worldId, 
+    @PostMapping( "/{steps}" )
+    public DoStepsResponse doSteps(@PathVariable("worldId") long worldId, 
                                   @PathVariable("steps") int steps) {
         
-        LOGGER.info( "Do steps for world {}", worldId );
+        LOG.info( "Do steps for world {}", worldId );
         
-        StepCriteria criteria = new StepCriteria();
-        criteria.setStepCount( steps );
-        return calculate( criteria );
+        DoStepsRequest request = new DoStepsRequest();
+        request.setStepCount( steps );
+        return calculate( request );
     }
     
     @PostMapping
-    public DoStepResponse doSteps(@PathVariable("worldId") long worldId,
-                                  @RequestBody StepCriteria criteria) {
-        LOGGER.info( "Do steps for world {}", worldId );
-        return calculate( criteria );
+    public DoStepsResponse doSteps(@PathVariable("worldId") long worldId,
+                                  @RequestBody DoStepsRequest request) {
+        LOG.info( "Do steps for world {}", worldId );
+        return calculate( request );
     }
     
-    private DoStepResponse calculate(StepCriteria criteria) {
+    private DoStepsResponse calculate(DoStepsRequest request) {
         
-        LOGGER.info( "Received criteria {}", criteria );
+        LOG.info( "Received request {}", request );
         
-        DoStepResponse response = new DoStepResponse();
-        String message = String.format( "Started calculating next %d step(s)", criteria.getStepCount() );
+        DoStepsResponse response = new DoStepsResponse();
+        String message = String.format( "Started calculating next %d step(s)", request.getStepCount() );
         response.setMessage( message );
         return response;
     }
