@@ -1,11 +1,17 @@
 import { TestBed, async } from '@angular/core/testing';
+import { HttpClientModule } from '@angular/common/http';
 import { AppComponent } from './app.component';
+import { BioevoFrontComponent } from './bioevo-front/bioevo-front.component';
 describe('AppComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [
-        AppComponent
+        AppComponent,
+        BioevoFrontComponent
       ],
+	  imports: [
+	    HttpClientModule
+	  ],
     }).compileComponents();
   }));
   it('should create the app', async(() => {
