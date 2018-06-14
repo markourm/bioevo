@@ -11,7 +11,7 @@ export class ReportService {
   constructor(private http: HttpClient) {}
   
   getWorlds(): Observable<any> {
-    return this.http.get('http://localhost:8081/v1/report/world');
+    return this.http.get('http://localhost:8501/v1/report/world');
   }
   
 }

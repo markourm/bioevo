@@ -25,8 +25,8 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 @WebMvcTest
 public class TimeStepControllerTest {
     
-    private static final String TIMESTEP_URL = "/v1/{worldId}/step";
-    private static final String TIMESTEP_STEPS_URL = "/v1/{worldId}/step/{steps}";
+    private static final String TIMESTEP_URL = "/v1/world/{worldId}/step";
+    private static final String TIMESTEP_STEPS_URL = "/v1/world/{worldId}/step/{steps}";
     
     private static final String EXPECTED_MESSAGE = "Started calculating next %d step(s)";
 

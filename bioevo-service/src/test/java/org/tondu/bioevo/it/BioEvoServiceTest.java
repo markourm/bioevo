@@ -24,8 +24,8 @@ import org.tondu.bioevo.api.response.DoStepsResponse;
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 public class BioEvoServiceTest {
     
-    private static final String TIMESTEP_URL = "/v1/{worldId}/step/{steps}";
-    private static final String TIMESTEP_STEPS_URL = "/v1/{worldId}/step";
+    private static final String TIMESTEP_URL = "/v1/world/{worldId}/step/{steps}";
+    private static final String TIMESTEP_STEPS_URL = "/v1/world/{worldId}/step";
     private static final String CREATE_WORLD_URL = "/v1/world";
     
     private static final String EXPECTED_TIMESTEP_MESSAGE = "Started calculating next %d step(s)";

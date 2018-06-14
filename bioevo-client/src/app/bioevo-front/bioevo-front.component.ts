@@ -1,17 +1,17 @@
 import { Component, OnInit } from '@angular/core';
-import { ReportService } from '../shared';
+import { ReportService, BioEvoService } from '../shared';
 
 @Component({
   selector: 'app-bioevo-front',
   templateUrl: './bioevo-front.component.html',
   styleUrls: ['./bioevo-front.component.css'],
-  providers: [ReportService]
+  providers: [ReportService, BioEvoService]
 })
 export class BioevoFrontComponent implements OnInit {
 
   worlds: Array<any>;
 
-  constructor(private reportService: ReportService) { }
+  constructor(private reportService: ReportService, private bioEvoService: BioEvoService) { }
 
   ngOnInit() {
     this.reportService.getWorlds().subscribe(

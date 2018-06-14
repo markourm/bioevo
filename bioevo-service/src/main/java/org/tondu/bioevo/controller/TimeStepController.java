@@ -18,7 +18,7 @@ import org.tondu.bioevo.api.response.DoStepsResponse;
  */
 @RestController
 @CrossOrigin("${bioevo.service.crossorigin.origins}")
-@RequestMapping(value = "/v1/{worldId}/step")
+@RequestMapping(value = "/v1/world/{worldId}/step")
 public class TimeStepController {
     
     private static final Logger LOG = LoggerFactory.getLogger( TimeStepController.class );
