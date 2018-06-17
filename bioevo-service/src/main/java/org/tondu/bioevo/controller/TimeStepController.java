@@ -31,22 +31,23 @@ public class TimeStepController {
         
         DoStepsRequest request = new DoStepsRequest();
         request.setStepCount( steps );
-        return calculate( request );
+        return calculate( worldId, request );
     }
     
     @PostMapping
     public DoStepsResponse doSteps(@PathVariable("worldId") long worldId,
                                   @RequestBody DoStepsRequest request) {
         LOG.info( "Do steps for world {}", worldId );
-        return calculate( request );
+        return calculate( worldId, request );
     }
     
-    private DoStepsResponse calculate(DoStepsRequest request) {
+    private DoStepsResponse calculate(long worldId, DoStepsRequest request) {
         
         LOG.info( "Received request {}", request );
         
         DoStepsResponse response = new DoStepsResponse();
         String message = String.format( "Started calculating next %d step(s)", request.getStepCount() );
+        response.setWorldId( worldId );
         response.setMessage( message );
         return response;
     }

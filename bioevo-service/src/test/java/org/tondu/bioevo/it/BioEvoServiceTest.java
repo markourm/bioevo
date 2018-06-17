@@ -47,6 +47,7 @@ public class BioEvoServiceTest {
         assertThat( response.getStatusCode() ).isEqualTo( HttpStatus.OK );
         
         DoStepsResponse doStepResponse = response.getBody();
+        assertThat( doStepResponse.getWorldId() ).isEqualTo( worldId );
         assertThat( doStepResponse.getMessage() ).isEqualTo( expectedMessage );
     }
     
@@ -67,6 +68,7 @@ public class BioEvoServiceTest {
         assertThat( response.getStatusCode() ).isEqualTo( HttpStatus.OK );
         
         DoStepsResponse doStepResponse = response.getBody();
+        assertThat( doStepResponse.getWorldId() ).isEqualTo( worldId );
         assertThat( doStepResponse.getMessage() ).isEqualTo( expectedMessage );        
     }
     

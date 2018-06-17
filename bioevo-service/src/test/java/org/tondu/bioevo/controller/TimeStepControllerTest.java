@@ -49,6 +49,7 @@ public class TimeStepControllerTest {
         //then
                                             .andExpect( status().isOk() )
                                             .andExpect( content().contentType( MediaType.APPLICATION_JSON_UTF8 ) )
+                                            .andExpect( jsonPath( "$.worldId" ).value( worldId ) )
                                             .andExpect( jsonPath( "$.message" ).value( expectedMessage ) );
     }
     
@@ -72,6 +73,7 @@ public class TimeStepControllerTest {
         //then
                                             .andExpect( status().isOk() )
                                             .andExpect( content().contentType( MediaType.APPLICATION_JSON_UTF8 ) )
+                                            .andExpect( jsonPath( "$.worldId" ).value( worldId ) )
                                             .andExpect( jsonPath( "$.message" ).value( expectedMessage ) );
     }
     
