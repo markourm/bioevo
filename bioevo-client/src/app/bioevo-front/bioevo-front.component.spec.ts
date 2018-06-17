@@ -26,4 +26,11 @@ describe('BioevoFrontComponent', () => {
   it('should create', () => {
     expect(component).toBeTruthy();
   });
+  
+  it('should have <h2> with "Worlds"', () => {
+    const frontElement: HTMLElement = fixture.nativeElement;
+    const h2 = frontElement.querySelector('h2');
+    expect(h2.textContent).toEqual('Worlds');
+  });
+  
 });
