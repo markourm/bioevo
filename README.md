@@ -24,7 +24,7 @@ Angular CLI 6.x:
 
 `./docker-compose-up`
 
-Visit http://localhost/
+Visit http://localhost:8500
 
 ## Stop and remove the docker containers
 

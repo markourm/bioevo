@@ -12,7 +12,7 @@ import org.springframework.http.MediaType;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
-import org.tondu.bioevo.api.request.StepCriteria;
+import org.tondu.bioevo.api.request.DoStepsRequest;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
@@ -25,8 +25,8 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 @WebMvcTest
 public class TimeStepControllerTest {
     
-    private static final String TIMESTEP_POST_URL = "/v1/{worldId}/step";
-    private static final String TIMESTEP_GET_URL = "/v1/{worldId}/step/{steps}";
+    private static final String TIMESTEP_URL = "/v1/world/{worldId}/step";
+    private static final String TIMESTEP_STEPS_URL = "/v1/world/{worldId}/step/{steps}";
     
     private static final String EXPECTED_MESSAGE = "Started calculating next %d step(s)";
 
@@ -44,11 +44,12 @@ public class TimeStepControllerTest {
         String expectedMessage = String.format( EXPECTED_MESSAGE, steps );
         
         //when
-        mvc.perform( MockMvcRequestBuilders.get( TIMESTEP_GET_URL, worldId, steps )
+        mvc.perform( MockMvcRequestBuilders.post( TIMESTEP_STEPS_URL, worldId, steps )
                                             .accept( MediaType.APPLICATION_JSON ) )
         //then
                                             .andExpect( status().isOk() )
                                             .andExpect( content().contentType( MediaType.APPLICATION_JSON_UTF8 ) )
+                                            .andExpect( jsonPath( "$.worldId" ).value( worldId ) )
                                             .andExpect( jsonPath( "$.message" ).value( expectedMessage ) );
     }
     
@@ -57,14 +58,14 @@ public class TimeStepControllerTest {
         //given
         int worldId = 3;
         int steps = 5;
-        StepCriteria criteria = new StepCriteria();
-        criteria.setStepCount( steps );
-        String body = jackson.writeValueAsString( criteria );
+        DoStepsRequest request = new DoStepsRequest();
+        request.setStepCount( steps );
+        String body = jackson.writeValueAsString( request );
         
         String expectedMessage = String.format( EXPECTED_MESSAGE, steps );
         
         //when
-        mvc.perform( MockMvcRequestBuilders.post( TIMESTEP_POST_URL, worldId )
+        mvc.perform( MockMvcRequestBuilders.post( TIMESTEP_URL, worldId )
                                             .contentType( MediaType.APPLICATION_JSON_UTF8 )
                                             .content( body )
                                             .accept( MediaType.APPLICATION_JSON ) )
@@ -72,6 +73,7 @@ public class TimeStepControllerTest {
         //then
                                             .andExpect( status().isOk() )
                                             .andExpect( content().contentType( MediaType.APPLICATION_JSON_UTF8 ) )
+                                            .andExpect( jsonPath( "$.worldId" ).value( worldId ) )
                                             .andExpect( jsonPath( "$.message" ).value( expectedMessage ) );
     }
     

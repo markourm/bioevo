@@ -8,7 +8,7 @@ package org.tondu.bioevo.model;
 public class World {
 
     private long id;
-    private int currentStepId;
+    private int currentStepId = 1;
     
     public World() {}
     

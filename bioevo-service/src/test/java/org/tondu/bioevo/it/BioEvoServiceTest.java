@@ -10,8 +10,10 @@ import org.springframework.boot.test.web.client.TestRestTemplate;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
-import org.tondu.bioevo.api.request.StepCriteria;
-import org.tondu.bioevo.api.response.DoStepResponse;
+import org.tondu.bioevo.api.request.CreateWorldRequest;
+import org.tondu.bioevo.api.request.DoStepsRequest;
+import org.tondu.bioevo.api.response.CreateWorldResponse;
+import org.tondu.bioevo.api.response.DoStepsResponse;
 
 /**
  * Integration tests for BioEvo Service.
@@ -22,8 +24,9 @@ import org.tondu.bioevo.api.response.DoStepResponse;
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 public class BioEvoServiceTest {
     
-    private static final String TIMESTEP_GET_URL = "/v1/{worldId}/step/{steps}";
-    private static final String TIMESTEP_POST_URL = "/v1/{worldId}/step";
+    private static final String TIMESTEP_URL = "/v1/world/{worldId}/step/{steps}";
+    private static final String TIMESTEP_STEPS_URL = "/v1/world/{worldId}/step";
+    private static final String CREATE_WORLD_URL = "/v1/world";
     
     private static final String EXPECTED_TIMESTEP_MESSAGE = "Started calculating next %d step(s)";
     
@@ -38,12 +41,13 @@ public class BioEvoServiceTest {
         String expectedMessage = String.format( EXPECTED_TIMESTEP_MESSAGE, steps );
         
         //when
-        ResponseEntity<DoStepResponse> response = template.getForEntity( TIMESTEP_GET_URL, DoStepResponse.class, worldId, steps );
+        ResponseEntity<DoStepsResponse> response = template.postForEntity( TIMESTEP_URL, null, DoStepsResponse.class, worldId, steps );
         
         //then
         assertThat( response.getStatusCode() ).isEqualTo( HttpStatus.OK );
         
-        DoStepResponse doStepResponse = response.getBody();
+        DoStepsResponse doStepResponse = response.getBody();
+        assertThat( doStepResponse.getWorldId() ).isEqualTo( worldId );
         assertThat( doStepResponse.getMessage() ).isEqualTo( expectedMessage );
     }
     
@@ -52,19 +56,37 @@ public class BioEvoServiceTest {
         //given
         int worldId = 3;
         int steps = 5;
-        StepCriteria criteria = new StepCriteria();
-        criteria.setStepCount( steps );
+        DoStepsRequest request = new DoStepsRequest();
+        request.setStepCount( steps );
         
         String expectedMessage = String.format( EXPECTED_TIMESTEP_MESSAGE, steps );
         
         //when
-        ResponseEntity<DoStepResponse> response = template.postForEntity( TIMESTEP_POST_URL, criteria, DoStepResponse.class, worldId );
+        ResponseEntity<DoStepsResponse> response = template.postForEntity( TIMESTEP_STEPS_URL, request, DoStepsResponse.class, worldId );
         
         //then
         assertThat( response.getStatusCode() ).isEqualTo( HttpStatus.OK );
         
-        DoStepResponse doStepResponse = response.getBody();
+        DoStepsResponse doStepResponse = response.getBody();
+        assertThat( doStepResponse.getWorldId() ).isEqualTo( worldId );
         assertThat( doStepResponse.getMessage() ).isEqualTo( expectedMessage );        
+    }
+    
+    @Test
+    public void shouldCreateWorld() {
+        //given
+        long expectedWorldId = 1L;
+        CreateWorldRequest request = new CreateWorldRequest();
+        
+        //when
+        ResponseEntity<CreateWorldResponse> response = template.postForEntity( CREATE_WORLD_URL, request, CreateWorldResponse.class );
+        
+        //then
+        assertThat( response.getStatusCode() ).isEqualTo( HttpStatus.CREATED );
+        
+        CreateWorldResponse createWorldResponse = response.getBody();
+        assertThat( createWorldResponse.getWorldId() ).isEqualTo( expectedWorldId );
+        assertThat( createWorldResponse.getMessage() ).isNull();
     }
     
 }

@@ -1,11 +1,12 @@
 package org.tondu.bioevo.api.request;
 
 /**
+ * Request to advance world at least by one step.
  * Encapsulates criteria defining when step calculation should be stopped.
  *
  * @author Marko Urm
  */
-public class StepCriteria {
+public class DoStepsRequest {
 
     private int stepCount = 1;
     
@@ -19,7 +20,7 @@ public class StepCriteria {
 
     @Override
     public String toString() {
-        return "StepCriteria [stepCount=" + stepCount + "]";
+        return "DoStepsRequest [stepCount=" + stepCount + "]";
     }
     
 }
