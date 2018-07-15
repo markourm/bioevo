@@ -1,25 +1,60 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 
-@Injectable({
-  providedIn: 'root'
-})
+import { Observable } from 'rxjs';
+import { catchError, tap } from 'rxjs/operators';
+
+import { WorldResponse } from '../../model/world.response';
+
+@Injectable()
 export class BioEvoService {
 
-  baseUrl = 'http://localhost:8502/v1/world';
+  readonly baseUrl = 'http://localhost:8502/v1/world';
 
   constructor(private http: HttpClient) {}
-  
-  createWorld(): Observable<any> {
-    return this.http.post(this.baseUrl, null);
+
+  createWorld(): Observable<WorldResponse> {
+    return this.http.post<WorldResponse>(this.baseUrl, null)
+       .pipe(
+        tap(response => this.log(`created world`)),
+        catchError(this.handleError('createWorld'))
+      ) as Observable<WorldResponse>;
   }
-  
-  doSteps(worldId, steps): Observable<any> {
-  
+
+  doSteps(worldId, steps): Observable<WorldResponse> {
+
     const url = this.baseUrl + '/' + worldId + '/step/' + steps;
-  
-    return this.http.post(url, null);
-  }    
-  
+
+    return this.http.post<WorldResponse>(url, null)
+        .pipe(
+        tap(response => this.log(`advanced world ` + worldId)),
+        catchError(this.handleError('doSteps'))
+      ) as Observable<WorldResponse>;
+  }
+
+  /**
+   * Returns a function that handles Http operation failures.
+   * This error handler lets the app continue to run as if no error occurred.
+   * @param operation - name of the operation that failed
+   */
+  private handleError<T> (operation = 'operation') {
+    return (error: HttpErrorResponse): Observable<T> => {
+
+      // TODO: send the error to remote logging infrastructure
+      console.error(error); // log to console instead
+
+      const message = (error.error instanceof ErrorEvent) ?
+        error.error.message :
+       `server returned code ${error.status} with body "${error.error}"`;
+
+      // TODO: better job of transforming error for user consumption
+      throw new Error(`${operation} failed: ${message}`);
+    };
+
+  }
+
+  private log(message: string) {
+    console.log('BioEvoService: ' + message);
+  }
+
 }

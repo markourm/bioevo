@@ -1,4 +1,10 @@
 <h2>Worlds</h2>
-<div *ngFor="let world of worlds">
-  {{world.id}}
-</div>
+<p class="error" *ngIf="errorMessage">{{ errorMessage }}</p>
+<ul class="worlds">
+  <li><span class="badge">ID</span> Current Step</li>
+  <li *ngFor="let world of worlds | async"
+    [class.selected]="world === selectedWorld"
+    (click)="onSelect(world)">
+    <span class="badge">{{world.id}}</span> {{world.currentStepId}}
+  </li>
+</ul>

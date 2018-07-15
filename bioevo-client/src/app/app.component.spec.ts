@@ -1,31 +1,37 @@
-import { TestBed, async } from '@angular/core/testing';
-import { HttpClientModule } from '@angular/common/http';
+import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+
+import { Component } from '@angular/core';
+
 import { AppComponent } from './app.component';
-import { BioevoFrontComponent } from './bioevo-front/bioevo-front.component';
-describe('AppComponent', () => {
+
+@Component({selector: 'app-bioevo-front', template: ''})
+class BioevoFrontStubComponent {}
+
+let comp:    AppComponent;
+let fixture: ComponentFixture<AppComponent>;
+
+describe('AppComponent & TestModule', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [
         AppComponent,
-        BioevoFrontComponent
-      ],
-	  imports: [
-	    HttpClientModule
-	  ],
-    }).compileComponents();
+        BioevoFrontStubComponent
+      ]
+    }).compileComponents().then(() => {
+      fixture = TestBed.createComponent(AppComponent);
+      comp    = fixture.componentInstance;
+    });
   }));
+  
   it('should create the app', async(() => {
-    const fixture = TestBed.createComponent(AppComponent);
-    const app = fixture.debugElement.componentInstance;
-    expect(app).toBeTruthy();
+    expect(comp).toBeTruthy();
   }));
+  
   it(`should have as title 'bioevo-client'`, async(() => {
-    const fixture = TestBed.createComponent(AppComponent);
-    const app = fixture.debugElement.componentInstance;
-    expect(app.title).toEqual('bioevo-client');
+    expect(comp.title).toEqual('bioevo-client');
   }));
+  
   it('should render title in a h1 tag', async(() => {
-    const fixture = TestBed.createComponent(AppComponent);
     fixture.detectChanges();
     const compiled = fixture.debugElement.nativeElement;
     expect(compiled.querySelector('h1').textContent).toContain('Welcome to bioevo-client!');

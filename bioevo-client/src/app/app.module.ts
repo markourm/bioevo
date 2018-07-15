@@ -1,20 +1,24 @@
-import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
+import { BrowserModule } from '@angular/platform-browser';
 import { HttpClientModule } from '@angular/common/http';
 
 import { AppComponent } from './app.component';
 import { BioevoFrontComponent } from './bioevo-front/bioevo-front.component';
+import { ReportService, BioEvoService } from './shared';
 
 @NgModule({
-  declarations: [
-    AppComponent,
-    BioevoFrontComponent
-  ],
   imports: [
     BrowserModule,
     HttpClientModule
   ],
-  providers: [],
+  providers: [
+    ReportService,
+    BioEvoService
+  ],
+  declarations: [
+    AppComponent,
+    BioevoFrontComponent
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
