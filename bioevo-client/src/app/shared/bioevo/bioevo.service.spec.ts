@@ -2,6 +2,7 @@ import { HttpClientTestingModule, HttpTestingController } from '@angular/common/
 import { TestBed, inject } from '@angular/core/testing';
 import { HttpClient, HttpResponse, HttpErrorResponse } from '@angular/common/http';
 
+import { WorldResponse } from '../../model/world.response';
 import { BioEvoService } from './bioevo.service';
 
 describe('BioEvoService', () => {
@@ -30,7 +31,7 @@ describe('BioEvoService', () => {
   
   describe('#createWorld', () => {
     const createWorldUrl = 'http://localhost:8502/v1/world';
-    const worldResponse: Object = { worldId: 1 };
+    const worldResponse: WorldResponse = { worldId: 1 };
 
     it('should create a new world', () => {
       bioEvoService.createWorld().subscribe(
@@ -51,7 +52,7 @@ describe('BioEvoService', () => {
       const msg = 'Deliberate 404';
       bioEvoService.createWorld().subscribe(
         data => fail('expected to fail'),
-        error => expect(error.message).toContain('404 Not Found')
+        error => expect(error.message).toContain(msg)
       );
 
       const req = httpTestingController.expectOne(createWorldUrl);
@@ -66,7 +67,7 @@ describe('BioEvoService', () => {
       const worldId = 5;
       const steps = 4;
       const doStepsUrl = 'http://localhost:8502/v1/world/' + worldId + '/step/' + steps;
-      const doStepsResponse = { 'worldId': worldId, 'message': 'Started calculating next ' + steps + ' step(s)' };
+      const doStepsResponse = { worldId: worldId, message: 'Started calculating next ' + steps + ' step(s)' };
     
       bioEvoService.doSteps(worldId, steps).subscribe(
         data => expect(data).toEqual(doStepsResponse, 'should return the world id and message'),
@@ -90,7 +91,7 @@ describe('BioEvoService', () => {
       
       bioEvoService.doSteps(worldId, steps).subscribe(
         data => fail('expected to fail'),
-        error => expect(error.message).toContain('404 Not Found')
+        error => expect(error.message).toContain(msg)
       );
 
       const req = httpTestingController.expectOne(doStepsUrl);

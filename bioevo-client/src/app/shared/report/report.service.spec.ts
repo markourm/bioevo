@@ -2,6 +2,7 @@ import { HttpClientTestingModule, HttpTestingController } from '@angular/common/
 import { TestBed, inject } from '@angular/core/testing';
 import { HttpClient, HttpResponse, HttpErrorResponse } from '@angular/common/http';
 
+import { World } from '../../model/world';
 import { ReportService } from './report.service';
 
 describe('ReportService', () => {
@@ -30,13 +31,13 @@ describe('ReportService', () => {
   
   describe('#getWorlds', () => {
     const getWorldsUrl = 'http://localhost:8501/v1/report/world';
-    let expectedWorlds: Object[];
+    let expectedWorlds: World[];
 
     beforeEach(() => {
       expectedWorlds = [
         { id: 1, currentStepId: 1 },
         { id: 5, currentStepId: 30 },
-       ] as Object[];
+       ] as World[];
     });
 
     it('should return expected worlds (called once)', () => {
@@ -67,7 +68,7 @@ describe('ReportService', () => {
       const msg = 'Deliberate 404';
       reportService.getWorlds().subscribe(
         worlds => fail('expected to fail'),
-        error => expect(error.message).toContain('404 Not Found')
+        error => expect(error.message).toContain(msg)
       );
 
       const req = httpTestingController.expectOne(getWorldsUrl);
