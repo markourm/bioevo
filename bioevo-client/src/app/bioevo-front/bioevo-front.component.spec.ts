@@ -1,8 +1,6 @@
 import { async, fakeAsync, ComponentFixture, TestBed, tick } from '@angular/core/testing';
 
-import { asyncData, asyncError }  from '../../testing';
-import { of, throwError } from 'rxjs';
-import { last } from 'rxjs/operators';
+import { of } from 'rxjs';
 
 import { World } from '../model/world';
 import { WorldResponse } from '../model/world.response';
@@ -14,7 +12,7 @@ let component: BioevoFrontComponent;
 let frontElement: HTMLElement;
 let page: Page;
 
-describe('BioevoFrontComponent', () => {  
+describe('BioevoFrontComponent', () => {
   
   let getWorldsSpy: jasmine.Spy;
   let createWorldSpy: jasmine.Spy;
@@ -116,7 +114,7 @@ function createComponent() {
 }
 
 class Page {
-  /** Hero line elements */
+
   worldRows: HTMLLIElement[];
 
   constructor() {
