@@ -5,6 +5,7 @@ import { Observable } from 'rxjs';
 import { catchError, tap } from 'rxjs/operators';
 
 import { WorldResponse } from '../../model/world.response';
+import { handleError } from '..';
 
 @Injectable()
 export class BioEvoService {
@@ -17,7 +18,7 @@ export class BioEvoService {
     return this.http.post<WorldResponse>(this.baseUrl, null)
        .pipe(
           tap(response => this.log(`created world`)),
-          catchError(this.handleError('createWorld'))
+          catchError(handleError('createWorld'))
       ) as Observable<WorldResponse>;
   }
 
@@ -28,31 +29,8 @@ export class BioEvoService {
     return this.http.post<WorldResponse>(url, null)
         .pipe(
           tap(response => this.log(`advanced world ` + worldId)),
-          catchError(this.handleError('doSteps'))
+          catchError(handleError('doSteps'))
       ) as Observable<WorldResponse>;
-  }
-
-  /**
-   * Returns a function that handles Http operation failures.
-   * This error handler lets the app continue to run as if no error occurred.
-   *
-   * @param operation - name of the operation that failed
-   */
-  private handleError<T> (operation = 'operation') {
-
-    return (error: HttpErrorResponse): Observable<T> => {
-
-      console.error(error);
-
-      const message = (error.error instanceof ErrorEvent) ?
-        error.error.message :
-        (error.error instanceof ProgressEvent) ?
-          'failed to connect to remote service' :
-          `server returned code ${error.status} with body "${error.error}"`;
-
-      throw new Error(`${operation} failed: ${message}`);
-    };
-
   }
 
   private log(message: string) {
