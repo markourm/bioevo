@@ -2,7 +2,7 @@
 <p class="error" *ngIf="errorMessage">{{ errorMessage }}</p>
 <ul class="worlds">
   <li><span class="badge">ID</span> Current Step</li>
-  <li *ngFor="let world of worlds | async"
+  <li *ngFor="let world of worlds"
     [class.selected]="world === selectedWorld"
     (click)="onSelect(world)">
     <span class="badge">{{world.id}}</span> {{world.currentStepId}}
