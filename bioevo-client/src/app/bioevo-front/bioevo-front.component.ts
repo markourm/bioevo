@@ -12,17 +12,25 @@ import { ReportService, BioEvoService } from '../shared';
 })
 export class BioevoFrontComponent implements OnInit {
 
-  worlds: Observable<World[]>;
-  selectedWorld: World;
-  errorMessage: string;
+  public worlds: World[];
+  public selectedWorld: World;
+  public errorMessage: string;
 
   constructor(
     private reportService: ReportService,
     private bioEvoService: BioEvoService) { }
 
   ngOnInit() {
+    this.worlds = [];
     this.errorMessage = '';
-    this.worlds = this.reportService.getWorlds();
+    this.loadWorlds();
+  }
+
+  loadWorlds() {
+    this.reportService.getWorlds().subscribe(
+      data => this.worlds = data,
+      error => this.errorMessage = error.message
+    );
   }
 
   onSelect(world: World) {
