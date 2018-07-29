@@ -3,7 +3,7 @@ import { Component, OnInit } from '@angular/core';
 import { Observable } from 'rxjs';
 
 import { World } from '../model/world';
-import { ReportService, BioEvoService } from '../shared';
+import { ReportService, BioEvoService } from '../service';
 
 @Component({
   selector: 'app-bioevo-front',

@@ -3,7 +3,9 @@
 // The list of file replacements can be found in `angular.json`.
 
 export const environment = {
-  production: false
+  production: false,
+  reportServiceUrl: 'http://localhost:8501',
+  bioevoServiceUrl: 'http://localhost:8502',
 };
 
 /*
