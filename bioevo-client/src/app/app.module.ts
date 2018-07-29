@@ -4,7 +4,7 @@ import { HttpClientModule } from '@angular/common/http';
 
 import { AppComponent } from './app.component';
 import { BioevoFrontComponent } from './bioevo-front/bioevo-front.component';
-import { ReportService, BioEvoService } from './shared';
+import { ReportService, BioEvoService } from './service';
 
 @NgModule({
   imports: [

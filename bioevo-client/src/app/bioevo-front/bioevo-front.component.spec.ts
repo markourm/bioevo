@@ -4,7 +4,7 @@ import { of, throwError } from 'rxjs';
 
 import { World } from '../model/world';
 import { WorldResponse } from '../model/world.response';
-import { ReportService, BioEvoService } from '../shared';
+import { ReportService, BioEvoService } from '../service';
 import { BioevoFrontComponent } from './bioevo-front.component';
 
 let fixture: ComponentFixture<BioevoFrontComponent>;
