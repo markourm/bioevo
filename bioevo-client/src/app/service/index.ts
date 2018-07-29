@@ -1,2 +1,2 @@
-export * from '../service/report/report.service';
-export * from '../service/bioevo/bioevo.service';
+export * from './report/report.service';
+export * from './bioevo/bioevo.service';
