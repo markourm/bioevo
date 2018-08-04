@@ -1,6 +1,7 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { Component } from '@angular/core';
+import { MaterialModule } from './material.module';
 
 import { AppComponent } from './app.component';
 
@@ -13,6 +14,9 @@ let fixture: ComponentFixture<AppComponent>;
 describe('AppComponent & TestModule', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
+      imports: [
+        MaterialModule
+      ],
       declarations: [
         AppComponent,
         BioevoFrontStubComponent
@@ -27,13 +31,13 @@ describe('AppComponent & TestModule', () => {
     expect(comp).toBeTruthy();
   }));
   
-  it(`should have as title 'bioevo-client'`, async(() => {
-    expect(comp.title).toEqual('bioevo-client');
+  it(`should have as title 'BioEvo Client'`, async(() => {
+    expect(comp.title).toEqual('BioEvo Client');
   }));
   
   it('should render title in a h1 tag', async(() => {
     fixture.detectChanges();
     const compiled = fixture.debugElement.nativeElement;
-    expect(compiled.querySelector('h1').textContent).toContain('Welcome to bioevo-client!');
+    expect(compiled.querySelector('span').textContent).toContain('Welcome to BioEvo Client!');
   }));
 });

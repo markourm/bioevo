@@ -1,10 +1,14 @@
-<h2>Worlds</h2>
-<p class="error" *ngIf="errorMessage">{{ errorMessage }}</p>
-<ul class="worlds">
-  <li><span class="badge">ID</span> Current Step</li>
-  <li *ngFor="let world of worlds"
-    [class.selected]="world === selectedWorld"
-    (click)="onSelect(world)">
-    <span class="badge">{{world.id}}</span> {{world.currentStepId}}
-  </li>
-</ul>
+<mat-card>
+  <mat-card-header>
+  	<mat-card-title><div class="mat-title">Worlds</div></mat-card-title>
+  </mat-card-header>
+  <mat-card-content>
+    <p class="error" *ngIf="errorMessage">{{ errorMessage }}</p>
+    <mat-list class="worlds">
+      <mat-list-item><span>ID</span> Current Step</mat-list-item>
+      <mat-list-item *ngFor="let world of worlds" [class.selected]="world === selectedWorld" (click)="onSelect(world)">
+        <span mat-line>{{world.id}}</span> {{world.currentStepId}}
+      </mat-list-item>
+    </mat-list>
+  </mat-card-content>
+</mat-card>
