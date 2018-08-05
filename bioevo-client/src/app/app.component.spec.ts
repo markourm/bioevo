@@ -26,18 +26,18 @@ describe('AppComponent & TestModule', () => {
       comp    = fixture.componentInstance;
     });
   }));
-  
+
   it('should create the app', async(() => {
     expect(comp).toBeTruthy();
   }));
-  
+
   it(`should have as title 'BioEvo Client'`, async(() => {
-    expect(comp.title).toEqual('BioEvo Client');
+    expect(comp.title).toEqual('BioEvo');
   }));
-  
+
   it('should render title in a h1 tag', async(() => {
     fixture.detectChanges();
     const compiled = fixture.debugElement.nativeElement;
-    expect(compiled.querySelector('span').textContent).toContain('Welcome to BioEvo Client!');
+    expect(compiled.querySelector('span').textContent).toContain('Welcome to BioEvo!');
   }));
 });
