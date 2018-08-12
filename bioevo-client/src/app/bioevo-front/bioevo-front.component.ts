@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 
 import { World } from '../model/world';
+import { WorldResponse } from '../model/world.response';
 import { ReportService, BioEvoService } from '../service';
 
 @Component({
@@ -35,6 +36,21 @@ export class BioevoFrontComponent implements OnInit {
 
   onSelect(world: World) {
     this.selectedWorld = world;
+  }
+
+  createWorld() {
+    this.bioEvoService.createWorld().subscribe(
+      data => this.addWorld(data),
+      error => this.errorMessage = error.message
+    );
+  }
+
+  addWorld(response: WorldResponse) {
+    const world = {
+      id: response.worldId,
+      currentStepId: 1,
+    };
+    this.worlds.push(world);
   }
 
 }

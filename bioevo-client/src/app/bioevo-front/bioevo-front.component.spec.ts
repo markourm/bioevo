@@ -46,7 +46,7 @@ describe('BioevoFrontComponent', () => {
       reportService = jasmine.createSpyObj('ReportService', ['getWorlds']);
       getWorldsSpy = reportService.getWorlds.and.returnValue(of(worlds));
 
-      bioEvoService = jasmine.createSpyObj('BioEvoService', ['createWorld','doSteps']);
+      bioEvoService = jasmine.createSpyObj('BioEvoService', ['createWorld', 'doSteps']);
       createWorldSpy = bioEvoService.createWorld.and.returnValue(of(createWorldResponse));
       doStepsSpy = bioEvoService.doSteps.and.returnValue(of(doStepsResponse));
   }));
