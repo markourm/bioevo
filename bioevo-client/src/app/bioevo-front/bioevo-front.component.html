@@ -1,14 +1,17 @@
-<mat-card>
-  <mat-card-header>
-  	<mat-card-title><div class="mat-title">Worlds</div></mat-card-title>
-  </mat-card-header>
-  <mat-card-content>
-    <p class="error" *ngIf="errorMessage">{{ errorMessage }}</p>
-    <mat-list class="worlds">
-      <mat-list-item><span>ID</span> Current Step</mat-list-item>
-      <mat-list-item *ngFor="let world of worlds" [class.selected]="world === selectedWorld" (click)="onSelect(world)">
-        <span mat-line>{{world.id}}</span> {{world.currentStepId}}
-      </mat-list-item>
-    </mat-list>
-  </mat-card-content>
-</mat-card>
+<div class="mat-title">Worlds</div>
+<p class="error" *ngIf="errorMessage">{{ errorMessage }}</p>
+<table mat-table #table [dataSource]="worlds" class="mat-elevation-z8">
+
+  <ng-container matColumnDef="id">
+    <th mat-header-cell *matHeaderCellDef> ID </th>
+    <td mat-cell *matCellDef="let world"> {{world.id}} </td>
+  </ng-container>
+
+  <ng-container matColumnDef="currentStepId">
+    <th mat-header-cell *matHeaderCellDef> Current Step </th>
+    <td mat-cell *matCellDef="let world"> {{world.currentStepId}} </td>
+  </ng-container>
+
+  <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+  <tr mat-row *matRowDef="let world; columns: displayedColumns;" [class.selected]="world === selectedWorld" (click)="onSelect(world)"></tr>
+</table>

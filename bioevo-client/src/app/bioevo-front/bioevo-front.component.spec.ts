@@ -84,22 +84,23 @@ describe('BioevoFrontComponent', () => {
     });
 
     it('should list worlds', () => {
-      expect(page.worldRows.length).toBe(worlds.length + 1);
+      expect(page.worldRows.length).toBe(worlds.length);
 
-      const listHeader = page.worldRows[0].textContent;
-      expect(listHeader).toContain('ID Current Step', 'list.header');
+      const listHeader = page.worldHeader.textContent;
+      expect(listHeader).toContain('ID', 'list.header');
+      expect(listHeader).toContain('Current Step', 'list.header');
 
-      const firstWorld = page.worldRows[1].textContent;
+      const firstWorld = page.worldRows[0].textContent;
       expect(firstWorld).toContain(worlds[0].id.toString(), 'world.id');
       expect<any>(firstWorld).toContain(worlds[0].currentStepId, 'world.currentStepId');
 
-      const secondWorld = page.worldRows[2].textContent;
+      const secondWorld = page.worldRows[1].textContent;
       expect(secondWorld).toContain(worlds[1].id.toString(), 'world.id');
       expect<any>(secondWorld).toContain(worlds[1].currentStepId, 'world.currentStepId');
     });
 
     it('should select world on click', fakeAsync(() => {
-      const row = page.worldRows[2];
+      const row = page.worldRows[1];
       row.click();
       tick();
 
@@ -127,7 +128,7 @@ describe('BioevoFrontComponent', () => {
     }));
 
     it('should display error message', fakeAsync(() => {
-      const message = "getWorlds failed: some message";
+      const message = 'getWorlds failed: some message';
       const error = throwError(new Error(message));
 
       getWorldsSpy = reportService.getWorlds.and.returnValue(error);
@@ -161,10 +162,14 @@ function createComponent() {
 
 class Page {
 
+  worldHeader: HTMLElement;
   worldRows: HTMLElement[];
 
   constructor() {
-    const worldRowNodes = frontElement.querySelectorAll('.mat-list-item') as NodeListOf<HTMLElement>;
+    const worldRowNodes = frontElement.querySelectorAll('.mat-row') as NodeListOf<HTMLElement>;
     this.worldRows = Array.from(worldRowNodes);
-  };
+
+    const worldHeaderNode = frontElement.querySelectorAll('.mat-header-row') as NodeListOf<HTMLElement>;
+    this.worldHeader = worldHeaderNode.item(0);
+  }
 }

@@ -1,7 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 
-import { Observable } from 'rxjs';
-
 import { World } from '../model/world';
 import { ReportService, BioEvoService } from '../service';
 
@@ -13,6 +11,8 @@ import { ReportService, BioEvoService } from '../service';
 export class BioevoFrontComponent implements OnInit {
 
   public worlds: World[];
+  public displayedColumns: string[] = ['id', 'currentStepId'];
+
   public selectedWorld: World;
   public errorMessage: string;
 

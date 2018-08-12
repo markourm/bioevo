@@ -1,4 +1,12 @@
-import { MatButtonModule, MatCardModule, MatInputModule, MatListModule, MatToolbarModule, MatIconModule } from '@angular/material';
+import {
+  MatButtonModule,
+  MatCardModule,
+  MatInputModule,
+  MatListModule,
+  MatToolbarModule,
+  MatIconModule,
+  MatTableModule } from '@angular/material';
+import { CdkTableModule } from '@angular/cdk/table';
 import { NgModule } from '@angular/core';
 
 @NgModule({
@@ -8,7 +16,9 @@ import { NgModule } from '@angular/core';
     MatInputModule,
     MatListModule,
     MatToolbarModule,
-    MatIconModule
+    MatIconModule,
+    MatTableModule,
+    CdkTableModule
   ],
   exports: [
     MatButtonModule,
@@ -16,7 +26,9 @@ import { NgModule } from '@angular/core';
     MatInputModule,
     MatListModule,
     MatToolbarModule,
-    MatIconModule
+    MatIconModule,
+    MatTableModule,
+    CdkTableModule
   ],
   declarations: []
 })
