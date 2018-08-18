@@ -19,4 +19,4 @@ MAINTAINER Marko Urm <markourm@gmail.com>
 RUN rm -rf /usr/share/nginx/html/*
 
 COPY --from=node /app/dist /usr/share/nginx/html
-COPY ./nginx-custom.conf /etc/nginx/conf.d/default.conf
+COPY ./nginx-custom.conf /etc/nginx/conf.d/bioevo.conf

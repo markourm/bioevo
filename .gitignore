@@ -61,7 +61,8 @@ hs_err_pid*
 **/node_modules/
 
 # IDE - VSCode
-.vscode/*
+/.vscode
+**/.vscode/
 !.vscode/settings.json
 !.vscode/tasks.json
 !.vscode/launch.json
