@@ -26,21 +26,21 @@
 
 		<plugins>
 
-			<plugin> 
-				<artifactId>maven-clean-plugin</artifactId> 
-				<version>3.1.0</version> 
-				<configuration> 
-					<filesets> 
-						<fileset> 
-							<directory>dist</directory> 
-							<includes> 
-								<include>**/*</include> 
-							</includes> 
+			<plugin>
+				<artifactId>maven-clean-plugin</artifactId>
+				<version>3.1.0</version>
+				<configuration>
+					<filesets>
+						<fileset>
+							<directory>dist</directory>
+							<includes>
+								<include>**/*</include>
+							</includes>
 						</fileset>
-					</filesets> 
-				</configuration> 
+					</filesets>
+				</configuration>
 			</plugin>
-			
+
 			<plugin>
 				<groupId>org.codehaus.mojo</groupId>
 				<artifactId>exec-maven-plugin</artifactId>
@@ -53,9 +53,10 @@
 							<goal>exec</goal>
 						</goals>
 						<configuration>
-							<executable>ng</executable>
+							<executable>npx</executable>
 							<workingDirectory>${project.basedir}</workingDirectory>
 							<arguments>
+                          <argument>ng</argument>
 			                    <argument>test</argument>
 			                    <argument>--watch=false</argument>
 			                </arguments>
@@ -90,7 +91,7 @@
 							<goal>npm</goal>
 						</goals>
 					</execution>
-					
+
 					<execution>
 						<id>npm-build</id>
 						<goals>
@@ -100,18 +101,18 @@
 							<arguments>run build</arguments>
 						</configuration>
 					</execution>
-					
+
 					<!-- disabled due to https://github.com/angular/angular-cli/issues/10703
 					<execution>
 					    <id>karma tests</id>
 					    <goals>
 					        <goal>karma</goal>
-					    </goals>					
+					    </goals>
 					    <configuration>
 					        <karmaConfPath>src/karma.conf.js</karmaConfPath>
 					    </configuration>
 					</execution> -->
-					
+
 					<execution>
 						<id>protractor tests</id>
 						<goals>
@@ -124,7 +125,7 @@
 					</execution>
 
 				</executions>
-			</plugin>			
+			</plugin>
 
 			<plugin>
 				<groupId>com.spotify</groupId>
@@ -151,13 +152,13 @@
 					</dependency>
 				</dependencies>
 			</plugin>
-			
+
 			<plugin>
             	<groupId>com.dkanejs.maven.plugins</groupId>
 	            <artifactId>docker-compose-maven-plugin</artifactId>
 				<configuration>
 	                <skip>true</skip>
-	            </configuration>	            
+	            </configuration>
 	        </plugin>
 
 		</plugins>

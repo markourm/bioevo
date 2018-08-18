@@ -1,8 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 
-import { Observable } from 'rxjs';
-
 import { World } from '../model/world';
+import { WorldResponse } from '../model/world.response';
 import { ReportService, BioEvoService } from '../service';
 
 @Component({
@@ -13,7 +12,9 @@ import { ReportService, BioEvoService } from '../service';
 export class BioevoFrontComponent implements OnInit {
 
   public worlds: World[];
-  public selectedWorld: World;
+  public displayedColumns: string[] = ['id', 'currentStepId'];
+
+  public selectedWorldId: number;
   public errorMessage: string;
 
   constructor(
@@ -34,7 +35,23 @@ export class BioevoFrontComponent implements OnInit {
   }
 
   onSelect(world: World) {
-    this.selectedWorld = world;
+    this.selectedWorldId = world.id;
+  }
+
+  createWorld() {
+    this.bioEvoService.createWorld().subscribe(
+      data => this.addWorld(data),
+      error => this.errorMessage = error.message
+    );
+  }
+
+  addWorld(response: WorldResponse) {
+    const world = {
+      id: response.worldId,
+      currentStepId: 1
+    };
+    this.worlds.push(world);
+    this.worlds = this.worlds.slice();
   }
 
 }

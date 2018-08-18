@@ -5,7 +5,6 @@ import java.util.List;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -18,7 +17,6 @@ import org.tondu.bioevo.model.World;
  * @author Marko Urm
  */
 @RestController
-@CrossOrigin("${bioevo.service.crossorigin.origins}")
 @RequestMapping(value = "/v1/report/world")
 public class ReportController {
     

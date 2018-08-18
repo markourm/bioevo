@@ -40,7 +40,7 @@
 		<module>bioevo-service</module>
 		<module>bioevo-report-service</module>
 		<module>bioevo-client</module>		
-  </modules>
+  	</modules>
 
 	<build>
 		<pluginManagement>

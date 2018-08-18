@@ -1,10 +1,18 @@
-<h2>Worlds</h2>
+<div class="mat-title">Worlds</div>
 <p class="error" *ngIf="errorMessage">{{ errorMessage }}</p>
-<ul class="worlds">
-  <li><span class="badge">ID</span> Current Step</li>
-  <li *ngFor="let world of worlds"
-    [class.selected]="world === selectedWorld"
-    (click)="onSelect(world)">
-    <span class="badge">{{world.id}}</span> {{world.currentStepId}}
-  </li>
-</ul>
+<table mat-table #table [dataSource]="worlds" class="mat-elevation-z8">
+
+  <ng-container matColumnDef="id">
+    <th mat-header-cell *matHeaderCellDef> ID </th>
+    <td class="world-id" mat-cell *matCellDef="let world"> {{world.id}} </td>
+  </ng-container>
+
+  <ng-container matColumnDef="currentStepId">
+    <th mat-header-cell *matHeaderCellDef> Current Step </th>
+    <td class="current-step"  mat-cell *matCellDef="let world"> {{world.currentStepId}} </td>
+  </ng-container>
+
+  <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+  <tr mat-row *matRowDef="let world; columns: displayedColumns;" [class.selected]="world.id === selectedWorldId" (click)="onSelect(world)"></tr>
+</table>
+<button class="create-world-button" mat-raised-button (click)="createWorld()">Create a new World</button>

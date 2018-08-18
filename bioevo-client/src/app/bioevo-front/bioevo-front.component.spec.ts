@@ -1,6 +1,7 @@
 import { async, fakeAsync, ComponentFixture, TestBed, tick } from '@angular/core/testing';
 
 import { of, throwError } from 'rxjs';
+import { MaterialModule } from '../material.module';
 
 import { World } from '../model/world';
 import { WorldResponse } from '../model/world.response';
@@ -13,27 +14,27 @@ let frontElement: HTMLElement;
 let page: Page;
 
 describe('BioevoFrontComponent', () => {
-  
+
   let reportService;
   let bioEvoService;
-  
+
   let getWorldsSpy: jasmine.Spy;
   let createWorldSpy: jasmine.Spy;
   let doStepsSpy: jasmine.Spy;
-    
+
   let worlds: World[];
   let createWorldResponse: WorldResponse;
   let doStepsResponse: WorldResponse;
-  
+
   // Helper function to get the error message element value
   // An *ngIf keeps it out of the DOM until there is an error
   const errorMessage = () => {
     const el = fixture.nativeElement.querySelector('.error');
     return el ? el.textContent : null;
   };
-  
+
   beforeEach(async(() => {
-  
+
       worlds = [
           { id: 1, currentStepId: 1 },
           { id: 5, currentStepId: 30 },
@@ -41,20 +42,23 @@ describe('BioevoFrontComponent', () => {
 
       createWorldResponse = { worldId: 2 };
       doStepsResponse = { worldId: 2, message: 'Started calculating next 5 step(s)' };
-         
+
       reportService = jasmine.createSpyObj('ReportService', ['getWorlds']);
       getWorldsSpy = reportService.getWorlds.and.returnValue(of(worlds));
-      
-      bioEvoService = jasmine.createSpyObj('BioEvoService', ['createWorld','doSteps']);
+
+      bioEvoService = jasmine.createSpyObj('BioEvoService', ['createWorld', 'doSteps']);
       createWorldSpy = bioEvoService.createWorld.and.returnValue(of(createWorldResponse));
-      doStepsSpy = bioEvoService.doSteps.and.returnValue(of(doStepsResponse));      
+      doStepsSpy = bioEvoService.doSteps.and.returnValue(of(doStepsResponse));
   }));
-  
+
   describe('BioevoFrontComponent normal flow', () => {
-    
+
     beforeEach(async(() => {
 
       TestBed.configureTestingModule({
+        imports: [
+          MaterialModule
+        ],
         declarations: [ BioevoFrontComponent ],
         providers:    [
           { provide: ReportService, useValue: reportService },
@@ -64,51 +68,72 @@ describe('BioevoFrontComponent', () => {
       .compileComponents()
       .then(createComponent);
     }));
-  
+
     it('should create', () => {
         expect(component).toBeTruthy();
     });
-      
-    it('should have <h2> with "Worlds"', () => {
-        const h2 = frontElement.querySelector('h2');
+
+    it('should have title with "Worlds"', () => {
+        const h2 = frontElement.querySelector('.mat-title');
         expect(h2.textContent).toEqual('Worlds');
     });
-    
+
     it('should query worlds', () => {
       expect(errorMessage()).toBeNull('should not show error');
-      expect(getWorldsSpy.calls.any()).toBe(true, 'getWorlds called');    
+      expect(getWorldsSpy.calls.any()).toBe(true, 'getWorlds called');
     });
-    
-    it('should list worlds', () => {    
-      expect(page.worldRows.length).toBe(worlds.length + 1);    
-      const worldsList = frontElement.querySelector('.worlds');
-      
-      const listHeader = page.worldRows[0].textContent;
-      expect(listHeader).toContain('ID Current Step', 'list.header');
-      
-      const firstWorld = page.worldRows[1].textContent;
+
+    it('should list worlds', () => {
+      expect(page.worldRows.length).toBe(worlds.length);
+
+      const listHeader = page.worldHeader.textContent;
+      expect(listHeader).toContain('ID', 'list.header');
+      expect(listHeader).toContain('Current Step', 'list.header');
+
+      const firstWorld = page.worldRows[0].textContent;
       expect(firstWorld).toContain(worlds[0].id.toString(), 'world.id');
       expect<any>(firstWorld).toContain(worlds[0].currentStepId, 'world.currentStepId');
-      
-      const secondWorld = page.worldRows[2].textContent;
+
+      const secondWorld = page.worldRows[1].textContent;
       expect(secondWorld).toContain(worlds[1].id.toString(), 'world.id');
       expect<any>(secondWorld).toContain(worlds[1].currentStepId, 'world.currentStepId');
     });
-    
+
     it('should select world on click', fakeAsync(() => {
-      const row = page.worldRows[2];
+      const row = page.worldRows[1];
       row.click();
-      tick();
-      
-      expect(component.selectedWorld).toEqual(worlds[1]);
+
+      updatePage();
+
+      expect(component.selectedWorldId).toEqual(worlds[1].id);
+    }));
+
+    it('should add new world', fakeAsync(() => {
+      const initialRowCount = worlds.length;
+      page.createButton.click();
+
+      updatePage();
+
+      expect(component.worlds.length).toBe(initialRowCount + 1);
+      expect(page.worldRows.length).toBe(initialRowCount + 1);
+
+      const newRowId = initialRowCount;
+      const id = page.textContent(newRowId, '.world-id');
+      const currentStep = page.textContent(newRowId, '.current-step');
+
+      expect(id).toEqual(createWorldResponse.worldId.toString(), 'world.id');
+      expect(currentStep).toEqual('1', 'world.currentStepId');
     }));
   });
-  
+
   describe('BioevoFrontComponent error handling', () => {
-    
+
     beforeEach(async(() => {
 
       TestBed.configureTestingModule({
+        imports: [
+          MaterialModule
+        ],
         declarations: [ BioevoFrontComponent ],
         providers:    [
           { provide: ReportService, useValue: reportService },
@@ -116,24 +141,24 @@ describe('BioevoFrontComponent', () => {
         ]
       })
       .compileComponents();
-      
+
       fixture = TestBed.createComponent(BioevoFrontComponent);
     }));
-    
+
     it('should display error message', fakeAsync(() => {
-      const message = "getWorlds failed: some message";
+      const message = 'getWorlds failed: some message';
       const error = throwError(new Error(message));
-      
+
       getWorldsSpy = reportService.getWorlds.and.returnValue(error);
-      
-      fixture.detectChanges();
-      
+
+      updatePage();
+
       expect(getWorldsSpy.calls.any()).toBe(true, 'getWorlds called');
-      expect(errorMessage()).toEqual(message);      
+      expect(errorMessage()).toEqual(message);
     }));
-    
+
   });
-  
+
 });
 
 /** Create the component and set the `page` test variables */
@@ -146,19 +171,32 @@ function createComponent() {
   fixture.detectChanges();
 
   return fixture.whenStable().then(() => {
-    // got the worlds and updated component
-    // change detection updates the view
-    fixture.detectChanges();
-    page = new Page();
+    updatePage();
   });
+}
+
+function updatePage() {
+  fixture.detectChanges();
+  page = new Page();
 }
 
 class Page {
 
-  worldRows: HTMLLIElement[];
+  worldHeader: HTMLElement;
+  worldRows: HTMLElement[];
+  createButton: HTMLElement;
 
   constructor() {
-    const worldRowNodes = frontElement.querySelectorAll('li');
+    const worldRowNodes = frontElement.querySelectorAll('.mat-row') as NodeListOf<HTMLElement>;
     this.worldRows = Array.from(worldRowNodes);
-  };
+
+    const worldHeaderNode = frontElement.querySelectorAll('.mat-header-row') as NodeListOf<HTMLElement>;
+    this.worldHeader = worldHeaderNode.item(0);
+
+    this.createButton = frontElement.querySelector('.create-world-button');
+  }
+
+  textContent(rowId: number, selector: string) {
+    return this.worldRows[rowId].querySelector(selector).textContent.trim();
+  }
 }
