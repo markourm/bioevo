@@ -4,15 +4,15 @@
 
   <ng-container matColumnDef="id">
     <th mat-header-cell *matHeaderCellDef> ID </th>
-    <td mat-cell *matCellDef="let world"> {{world.id}} </td>
+    <td class="world-id" mat-cell *matCellDef="let world"> {{world.id}} </td>
   </ng-container>
 
   <ng-container matColumnDef="currentStepId">
     <th mat-header-cell *matHeaderCellDef> Current Step </th>
-    <td mat-cell *matCellDef="let world"> {{world.currentStepId}} </td>
+    <td class="current-step"  mat-cell *matCellDef="let world"> {{world.currentStepId}} </td>
   </ng-container>
 
   <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-  <tr mat-row *matRowDef="let world; columns: displayedColumns;" [class.selected]="world === selectedWorld" (click)="onSelect(world)"></tr>
+  <tr mat-row *matRowDef="let world; columns: displayedColumns;" [class.selected]="world.id === selectedWorldId" (click)="onSelect(world)"></tr>
 </table>
-<button mat-raised-button (click)="createWorld()">Create new World</button>
+<button class="create-world-button" mat-raised-button (click)="createWorld()">Create a new World</button>

@@ -14,7 +14,7 @@ export class BioevoFrontComponent implements OnInit {
   public worlds: World[];
   public displayedColumns: string[] = ['id', 'currentStepId'];
 
-  public selectedWorld: World;
+  public selectedWorldId: number;
   public errorMessage: string;
 
   constructor(
@@ -35,7 +35,7 @@ export class BioevoFrontComponent implements OnInit {
   }
 
   onSelect(world: World) {
-    this.selectedWorld = world;
+    this.selectedWorldId = world.id;
   }
 
   createWorld() {
@@ -48,9 +48,10 @@ export class BioevoFrontComponent implements OnInit {
   addWorld(response: WorldResponse) {
     const world = {
       id: response.worldId,
-      currentStepId: 1,
+      currentStepId: 1
     };
     this.worlds.push(world);
+    this.worlds = this.worlds.slice();
   }
 
 }

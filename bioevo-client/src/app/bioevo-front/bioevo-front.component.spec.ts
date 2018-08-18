@@ -102,9 +102,27 @@ describe('BioevoFrontComponent', () => {
     it('should select world on click', fakeAsync(() => {
       const row = page.worldRows[1];
       row.click();
-      tick();
 
-      expect(component.selectedWorld).toEqual(worlds[1]);
+      updatePage();
+
+      expect(component.selectedWorldId).toEqual(worlds[1].id);
+    }));
+
+    it('should add new world', fakeAsync(() => {
+      const initialRowCount = worlds.length;
+      page.createButton.click();
+
+      updatePage();
+
+      expect(component.worlds.length).toBe(initialRowCount + 1);
+      expect(page.worldRows.length).toBe(initialRowCount + 1);
+
+      const newRowId = initialRowCount;
+      const id = page.textContent(newRowId, '.world-id');
+      const currentStep = page.textContent(newRowId, '.current-step');
+
+      expect(id).toEqual(createWorldResponse.worldId.toString(), 'world.id');
+      expect(currentStep).toEqual('1', 'world.currentStepId');
     }));
   });
 
@@ -133,7 +151,7 @@ describe('BioevoFrontComponent', () => {
 
       getWorldsSpy = reportService.getWorlds.and.returnValue(error);
 
-      fixture.detectChanges();
+      updatePage();
 
       expect(getWorldsSpy.calls.any()).toBe(true, 'getWorlds called');
       expect(errorMessage()).toEqual(message);
@@ -153,17 +171,20 @@ function createComponent() {
   fixture.detectChanges();
 
   return fixture.whenStable().then(() => {
-    // got the worlds and updated component
-    // change detection updates the view
-    fixture.detectChanges();
-    page = new Page();
+    updatePage();
   });
+}
+
+function updatePage() {
+  fixture.detectChanges();
+  page = new Page();
 }
 
 class Page {
 
   worldHeader: HTMLElement;
   worldRows: HTMLElement[];
+  createButton: HTMLElement;
 
   constructor() {
     const worldRowNodes = frontElement.querySelectorAll('.mat-row') as NodeListOf<HTMLElement>;
@@ -171,5 +192,11 @@ class Page {
 
     const worldHeaderNode = frontElement.querySelectorAll('.mat-header-row') as NodeListOf<HTMLElement>;
     this.worldHeader = worldHeaderNode.item(0);
+
+    this.createButton = frontElement.querySelector('.create-world-button');
+  }
+
+  textContent(rowId: number, selector: string) {
+    return this.worldRows[rowId].querySelector(selector).textContent.trim();
   }
 }
