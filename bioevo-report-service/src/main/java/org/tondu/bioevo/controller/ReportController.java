@@ -28,6 +28,16 @@ public class ReportController {
         LOG.info( "Get list of all worlds" );        
         return listAllWorlds();
     }
+
+    @GetMapping( "/{worldId}" )
+    public World getWorldState(@PathVariable("worldId") long worldId) {
+
+        LOG.info( "Get state of world {}", worldId );
+        
+        var world = new World( worldId );
+        world.setCurrentStepId( 1 );
+        return world;
+    }
     
     @GetMapping( "/{worldId}/{stepId}" )
     public World getWorldState(@PathVariable("worldId") long worldId, @PathVariable("stepId") int stepId) {

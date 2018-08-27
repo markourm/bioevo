@@ -12,6 +12,13 @@
     <td class="current-step"  mat-cell *matCellDef="let world"> {{world.currentStepId}} </td>
   </ng-container>
 
+  <ng-container matColumnDef="view">
+    <th mat-header-cell *matHeaderCellDef></th>
+    <td class="view-world"  mat-cell *matCellDef="let world">
+      <button class="view-world-button" [routerLink]="[world.id]" routerLinkActive="router-link-active">View</button>
+    </td>
+  </ng-container>
+
   <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
   <tr mat-row *matRowDef="let world; columns: displayedColumns;" [class.selected]="world.id === selectedWorldId" (click)="onSelect(world)"></tr>
 </table>
