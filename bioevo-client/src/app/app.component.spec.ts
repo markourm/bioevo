@@ -1,7 +1,7 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-
 import { Component } from '@angular/core';
-import { MaterialModule } from './material.module';
+
+import { commonTestingModules } from '../testing/common.testing';
 
 import { AppComponent } from './app.component';
 
@@ -15,7 +15,7 @@ describe('AppComponent & TestModule', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       imports: [
-        MaterialModule
+        commonTestingModules
       ],
       declarations: [
         AppComponent,
@@ -31,13 +31,9 @@ describe('AppComponent & TestModule', () => {
     expect(comp).toBeTruthy();
   }));
 
-  it(`should have as title 'BioEvo Client'`, async(() => {
-    expect(comp.title).toEqual('BioEvo');
-  }));
-
-  it('should render title in a h1 tag', async(() => {
+  it('should have link to Home in toolbar', async(() => {
     fixture.detectChanges();
     const compiled = fixture.debugElement.nativeElement;
-    expect(compiled.querySelector('span').textContent).toContain('Welcome to BioEvo!');
+    expect(compiled.querySelector('mat-toolbar a span').textContent).toContain('Home');
   }));
 });

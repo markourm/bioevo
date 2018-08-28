@@ -1,7 +1,7 @@
 import { async, fakeAsync, ComponentFixture, TestBed, tick } from '@angular/core/testing';
 
 import { of, throwError } from 'rxjs';
-import { MaterialModule } from '../material.module';
+import { commonTestingModules } from '../../testing/common.testing';
 
 import { World } from '../model/world';
 import { WorldResponse } from '../model/world.response';
@@ -57,7 +57,7 @@ describe('BioevoFrontComponent', () => {
 
       TestBed.configureTestingModule({
         imports: [
-          MaterialModule
+          commonTestingModules
         ],
         declarations: [ BioevoFrontComponent ],
         providers:    [
@@ -132,7 +132,7 @@ describe('BioevoFrontComponent', () => {
 
       TestBed.configureTestingModule({
         imports: [
-          MaterialModule
+          commonTestingModules
         ],
         declarations: [ BioevoFrontComponent ],
         providers:    [

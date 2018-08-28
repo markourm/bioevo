@@ -6,6 +6,6 @@ export class AppPage {
   }
 
   getParagraphText() {
-    return element(by.css('.title')).getText();
+    return element(by.css('.bioevo-home-text')).getText();
   }
 }
