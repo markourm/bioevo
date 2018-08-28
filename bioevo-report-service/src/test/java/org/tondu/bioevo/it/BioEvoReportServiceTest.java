@@ -22,7 +22,8 @@ import org.tondu.bioevo.model.World;
 public class BioEvoReportServiceTest {
     
     private static final String REPORT_GET_WORLDS_URL = "/v1/report/world";
-    private static final String REPORT_GET_URL = "/v1/report/world/{worldId}/{stepId}";
+    private static final String REPORT_GET_WORLD_URL = "/v1/report/world/{worldId}";
+    private static final String REPORT_GET_WORLD_STEP_URL = "/v1/report/world/{worldId}/{stepId}";
     
     @Autowired
     private TestRestTemplate template;
@@ -56,10 +57,27 @@ public class BioEvoReportServiceTest {
     public void shouldGetWorldState() {
         //given
         int worldId = 3;
+        int expectedStepId = 1;
+        
+        //when
+        ResponseEntity<World> response = template.getForEntity( REPORT_GET_WORLD_URL, World.class, worldId );
+        
+        //then
+        assertThat( response.getStatusCode() ).isEqualTo( HttpStatus.OK );
+        
+        World world = response.getBody();
+        assertThat( world.getId() ).isEqualTo( worldId );
+        assertThat( world.getCurrentStepId() ).isEqualTo( expectedStepId );
+    }
+    
+    @Test
+    public void shouldGetWorldStateInGivenStep() {
+        //given
+        int worldId = 3;
         int stepId = 5;
         
         //when
-        ResponseEntity<World> response = template.getForEntity( REPORT_GET_URL, World.class, worldId, stepId );
+        ResponseEntity<World> response = template.getForEntity( REPORT_GET_WORLD_STEP_URL, World.class, worldId, stepId );
         
         //then
         assertThat( response.getStatusCode() ).isEqualTo( HttpStatus.OK );
@@ -67,6 +85,6 @@ public class BioEvoReportServiceTest {
         World world = response.getBody();
         assertThat( world.getId() ).isEqualTo( worldId );
         assertThat( world.getCurrentStepId() ).isEqualTo( stepId );
-    }        
+    }
     
 }
