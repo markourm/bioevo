@@ -89,6 +89,7 @@ describe('BioevoFrontComponent', () => {
       const listHeader = page.worldHeader.textContent;
       expect(listHeader).toContain('ID', 'list.header');
       expect(listHeader).toContain('Current Step', 'list.header');
+      expect(listHeader).toContain('Details', 'list.header');
 
       const firstWorld = page.worldRows[0].textContent;
       expect(firstWorld).toContain(worlds[0].id.toString(), 'world.id');
@@ -124,6 +125,11 @@ describe('BioevoFrontComponent', () => {
       expect(id).toEqual(createWorldResponse.worldId.toString(), 'world.id');
       expect(currentStep).toEqual('1', 'world.currentStepId');
     }));
+
+    it('should have link to World Detailed View', () => {
+      const viewButton = page.worldRows[0].querySelector('button');
+      expect(viewButton.textContent).toEqual('View');
+    });
   });
 
   describe('BioevoFrontComponent error handling', () => {

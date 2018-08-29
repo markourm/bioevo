@@ -13,6 +13,8 @@ let component: WorldComponent;
 let frontElement: HTMLElement;
 let page: Page;
 
+const worldNdx = 5;
+
 describe('WorldComponent', () => {
 
   let reportService;
@@ -31,9 +33,8 @@ describe('WorldComponent', () => {
 
   beforeEach(async(() => {
 
-    world = { id: 5, currentStepId: 1 };
-
-    doStepsResponse = { worldId: 2, message: 'Started calculating next 5 step(s)' };
+    world = { id: worldNdx, currentStepId: 1 };
+    doStepsResponse = { worldId: worldNdx, message: 'Started calculating next 5 step(s)' };
 
     reportService = jasmine.createSpyObj('ReportService', ['getWorld']);
     getWorldSpy = reportService.getWorld.and.returnValue(of(world));
@@ -64,6 +65,23 @@ describe('WorldComponent', () => {
       expect(component).toBeTruthy();
     });
 
+    it('should have World ID in title', () => {
+      expect(page.worldHeader.textContent).toContain('World ' + worldNdx);
+    });
+
+    it('should have World details', () => {
+      const content = page.worldContent.textContent;
+      expect(content).toContain('Loaded world with ID ' + worldNdx + ' and Current Step ID 1.');
+    });
+
+    it('should have button to advance World', () => {
+      expect(page.advanceButton.textContent).toContain('Advance a step');
+    });
+
+    it('should have button back to World list', () => {
+      expect(page.backButton.textContent).toContain('Back to worlds list');
+    });
+
   });
 
 });
@@ -91,11 +109,13 @@ class Page {
 
   worldHeader: HTMLElement;
   worldContent: HTMLElement;
+  advanceButton: HTMLElement;
   backButton: HTMLElement;
 
   constructor() {
     this.worldHeader = frontElement.querySelector('.world-details-header');
     this.worldContent = frontElement.querySelector('.world-details-content');
+    this.advanceButton = frontElement.querySelector('.world-details-step-button');
     this.backButton = frontElement.querySelector('.world-details-world-list-button');
   }
 
