@@ -12,7 +12,7 @@ ARG env=production
 RUN npm run build -- --prod --configuration $env
 
 # Stage 1, based on Nginx, to have only the compiled app, ready for production with Nginx
-FROM nginx:1.15-alpine
+FROM nginx:stable-alpine
 MAINTAINER Marko Urm <markourm@gmail.com>
 
 # Remove default nginx website

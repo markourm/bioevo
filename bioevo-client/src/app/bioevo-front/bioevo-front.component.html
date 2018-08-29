@@ -1,6 +1,6 @@
-<div class="mat-title">Worlds</div>
+<div class="mat-title world-list-title">Worlds</div>
 <p class="error" *ngIf="errorMessage">{{ errorMessage }}</p>
-<table mat-table #table [dataSource]="worlds" class="mat-elevation-z8">
+<table mat-table #table [dataSource]="worlds" class="mat-elevation-z8 world-list-table">
 
   <ng-container matColumnDef="id">
     <th mat-header-cell *matHeaderCellDef> ID </th>
@@ -19,7 +19,11 @@
     </td>
   </ng-container>
 
-  <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-  <tr mat-row *matRowDef="let world; columns: displayedColumns;" [class.selected]="world.id === selectedWorldId" (click)="onSelect(world)"></tr>
+  <tr mat-header-row *matHeaderRowDef="displayedColumns" class="world-list-header"></tr>
+  <tr mat-row *matRowDef="let world; columns: displayedColumns;"
+    class="world-list-row"
+    [class.selected]="world.id === selectedWorldId"
+    (click)="onSelect(world)">
+  </tr>
 </table>
 <button class="create-world-button" mat-raised-button (click)="createWorld()">Create a new World</button>
