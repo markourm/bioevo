@@ -46,18 +46,23 @@ describe('BioEvo user journeys', () => {
     home.getLoginButton().click();
     worldList.getCreateWorldButton().click();
 
-    // const rows = worldList.getWorldListRows();
-    // expect(rows.count()).toBeGreaterThan(0);
+    worldList.getWorldListRows().then(
+      rows => {
+        expect(rows.length).toBeGreaterThan(0);
+      }
+    );
 
-    // let lastRow = rows.last();
-    // const worldId = lastRow.findElement(by.css('.world-id')).getText();
+    worldList.getLastWorldId().then(
+      worldId => {
+        worldList.getLastViewDetailsButton().click();
 
-    // lastRow.findElement(by.css('.view-world-button')).click();
-    // expect(details.isDisplayed()).toBe(true);
-    // expect(details.getHeaderTitle()).toEqual('World ' + worldId);
+        expect(details.isDisplayed()).toBe(true);
+        expect(details.getHeaderTitle()).toEqual('World ' + worldId);
+      }
+    );
 
-    // details.getBackToListButton().click();
-    // expect(worldList.isDisplayed()).toBe(true);
+    details.getBackToListButton().click();
+    expect(worldList.isDisplayed()).toBe(true);
   });
 
 });

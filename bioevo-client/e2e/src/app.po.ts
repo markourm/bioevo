@@ -57,7 +57,15 @@ export class WorldListPage {
   }
 
   getWorldListRows() {
-    return $('.world-list-table').all(by.css('.world-list-row'));
+    return $('.world-list-table').$$('.world-list-row');
+  }
+
+  getLastWorldId() {
+    return $('.world-list-row:last-of-type').$('.world-id').getText();
+  }
+
+  getLastViewDetailsButton() {
+    return $('.world-list-row:last-of-type').$('.view-world-button');
   }
 
   getCreateWorldButton() {
