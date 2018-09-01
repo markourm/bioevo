@@ -47,6 +47,23 @@
               "extractLicenses": true,
               "vendorChunk": false,
               "buildOptimizer": true
+            },
+            "e2e-local": {
+              "fileReplacements": [
+                {
+                  "replace": "src/environments/environment.ts",
+                  "with": "src/environments/environment.e2e-local.ts"
+                }
+              ],
+              "optimization": true,
+              "outputHashing": "all",
+              "sourceMap": false,
+              "extractCss": true,
+              "namedChunks": false,
+              "aot": true,
+              "extractLicenses": true,
+              "vendorChunk": false,
+              "buildOptimizer": true
             }
           }
         },
@@ -58,6 +75,9 @@
           "configurations": {
             "production": {
               "browserTarget": "bioevo-client:build:production"
+            },
+            "e2e-local": {
+              "browserTarget": "bioevo-client:build:e2e-local"
             }
           }
         },
@@ -109,7 +129,7 @@
           "builder": "@angular-devkit/build-angular:protractor",
           "options": {
             "protractorConfig": "e2e/protractor.conf.js",
-            "devServerTarget": "bioevo-client:serve"
+            "devServerTarget": "bioevo-client:serve:e2e-local"
           },
           "configurations": {
             "production": {

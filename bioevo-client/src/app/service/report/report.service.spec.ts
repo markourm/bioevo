@@ -20,7 +20,7 @@ describe('ReportService', () => {
     httpTestingController = TestBed.get(HttpTestingController);
     reportService = TestBed.get(ReportService);
   });
-  
+
   afterEach(() => {
     httpTestingController.verify();
   });
@@ -28,7 +28,7 @@ describe('ReportService', () => {
   it('should be created', inject([ReportService], (service: ReportService) => {
     expect(service).toBeTruthy();
   }));
-  
+
   describe('#getWorlds', () => {
     const getWorldsUrl = 'http://localhost:8501/v1/report/world';
     let expectedWorlds: World[];
@@ -94,5 +94,5 @@ describe('ReportService', () => {
       requests[2].flush(expectedWorlds);
     });
   });
-  
+
 });

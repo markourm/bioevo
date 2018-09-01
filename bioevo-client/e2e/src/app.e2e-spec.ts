@@ -1,4 +1,4 @@
-import { by } from 'protractor';
+import { Wiremock } from './wiremock';
 
 import {
   LandingPage,
@@ -13,11 +13,18 @@ describe('BioEvo user journeys', () => {
   let worldList: WorldListPage;
   let details: WorldDetailsPage;
 
+  let wiremock: Wiremock;
+
   beforeEach(() => {
     home = new LandingPage();
     notFound = new NotFoundPage();
     worldList = new WorldListPage();
     details = new WorldDetailsPage();
+    wiremock = new Wiremock();
+  });
+
+  afterEach(() => {
+    wiremock.stop();
   });
 
   it('should display welcome message in landing page', () => {
@@ -43,23 +50,25 @@ describe('BioEvo user journeys', () => {
 
   it('should navigate to World Details', () => {
     home.navigateTo();
+
+    wiremock.get('/v1/report/world', [{ id: 3, currentStepId: 60 }, { id: 5, currentStepId: 30 }]);
     home.getLoginButton().click();
+
+    const newWorldId = 6;
+    wiremock.post('/v1/world', null, {worldId: newWorldId});
     worldList.getCreateWorldButton().click();
 
     worldList.getWorldListRows().then(
       rows => {
-        expect(rows.length).toBeGreaterThan(0);
+        expect(rows.length).toEqual(3);
       }
     );
 
-    worldList.getLastWorldId().then(
-      worldId => {
-        worldList.getLastViewDetailsButton().click();
+    wiremock.get('/v1/report/world/' + newWorldId, {id: newWorldId, currentStepId: 1});
+    worldList.getLastViewDetailsButton().click();
 
-        expect(details.isDisplayed()).toBe(true);
-        expect(details.getHeaderTitle()).toEqual('World ' + worldId);
-      }
-    );
+    expect(details.isDisplayed()).toBe(true);
+    expect(details.getHeaderTitle()).toEqual('World ' + newWorldId);
 
     details.getBackToListButton().click();
     expect(worldList.isDisplayed()).toBe(true);
