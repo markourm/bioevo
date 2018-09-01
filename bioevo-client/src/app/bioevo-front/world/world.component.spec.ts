@@ -1,5 +1,6 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-import { of, throwError } from 'rxjs';
+import { of } from 'rxjs';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 import { commonTestingModules } from '../../../testing/common.testing';
 import { ReportService, BioEvoService } from '../../service';
@@ -7,6 +8,7 @@ import { ReportService, BioEvoService } from '../../service';
 import { World } from '../../model/world';
 import { WorldResponse } from '../../model/world.response';
 import { WorldComponent } from './world.component';
+import { AdvanceStepsComponent } from '../advance-steps/advance-steps.component';
 
 let fixture: ComponentFixture<WorldComponent>;
 let component: WorldComponent;
@@ -49,9 +51,10 @@ describe('WorldComponent', () => {
 
       TestBed.configureTestingModule({
         imports: [
+          BrowserAnimationsModule,
           commonTestingModules
         ],
-        declarations: [ WorldComponent ],
+        declarations: [ WorldComponent, AdvanceStepsComponent ],
         providers:    [
           { provide: ReportService, useValue: reportService },
           { provide: BioEvoService, useValue: bioEvoService }

@@ -17,7 +17,7 @@ export function handleError<T> (operation = 'operation') {
 
       console.error(error);
 
-      let message = `server returned code ${error.status} with body "${error.error}"`;
+      let message = `server returned code ${error.status} with body "${error.message}"`;
 
       if (error.error instanceof ErrorEvent) {
         message = error.error.message;

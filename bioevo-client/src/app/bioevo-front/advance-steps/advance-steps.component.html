@@ -1,0 +1,8 @@
+<form>
+  <mat-form-field>
+    <input matInput type="number" placeholder="Number of steps to advance" aria-label="Number of steps" value="1">
+    <mat-error *ngIf="stepsInput.invalid">{{ stepsInput.errors }}</mat-error>
+  </mat-form-field>
+  <button mat-button class="world-details-step-button" (click)="advanceWorld(10)">Advance a step</button>
+</form>
+<p class="advance-steps-message" *ngIf="message">{{ message }}</p>

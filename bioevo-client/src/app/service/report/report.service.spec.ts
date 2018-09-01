@@ -68,7 +68,7 @@ describe('ReportService', () => {
       const msg = 'Deliberate 404';
       reportService.getWorlds().subscribe(
         worlds => fail('expected to fail'),
-        error => expect(error.message).toContain(msg)
+        error => expect(error.message).toContain('404 Not Found')
       );
 
       const req = httpTestingController.expectOne(getWorldsUrl);
@@ -122,7 +122,7 @@ describe('ReportService', () => {
       const msg = 'Deliberate 404';
       reportService.getWorld(worldId).subscribe(
         worlds => fail('expected to fail'),
-        error => expect(error.message).toContain(msg)
+        error => expect(error.message).toContain('404 Not Found')
       );
 
       const req = httpTestingController.expectOne(getWorldUrl + worldId);

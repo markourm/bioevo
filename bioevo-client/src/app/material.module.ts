@@ -1,6 +1,7 @@
 import {
   MatButtonModule,
   MatCardModule,
+  MatFormFieldModule,
   MatInputModule,
   MatListModule,
   MatToolbarModule,
@@ -14,6 +15,7 @@ import { NgModule } from '@angular/core';
   imports: [
     MatButtonModule,
     MatCardModule,
+    MatFormFieldModule,
     MatInputModule,
     MatListModule,
     MatToolbarModule,
@@ -25,6 +27,7 @@ import { NgModule } from '@angular/core';
   exports: [
     MatButtonModule,
     MatCardModule,
+    MatFormFieldModule,
     MatInputModule,
     MatListModule,
     MatToolbarModule,

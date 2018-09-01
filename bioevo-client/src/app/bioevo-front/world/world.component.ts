@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, Router, Params } from '@angular/router';
+import { ActivatedRoute, Params } from '@angular/router';
 
 import { World } from '../../model/world';
-import { ReportService, BioEvoService } from '../../service';
+import { ReportService } from '../../service';
 
 @Component({
   selector: 'app-world',
@@ -16,9 +16,7 @@ export class WorldComponent implements OnInit {
 
   constructor(
     private route: ActivatedRoute,
-    private router: Router,
-    private reportService: ReportService,
-    private bioEvoService: BioEvoService
+    private reportService: ReportService
   ) { }
 
   ngOnInit() {
