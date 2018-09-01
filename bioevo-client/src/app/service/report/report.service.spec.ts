@@ -20,7 +20,7 @@ describe('ReportService', () => {
     httpTestingController = TestBed.get(HttpTestingController);
     reportService = TestBed.get(ReportService);
   });
-  
+
   afterEach(() => {
     httpTestingController.verify();
   });
@@ -28,7 +28,7 @@ describe('ReportService', () => {
   it('should be created', inject([ReportService], (service: ReportService) => {
     expect(service).toBeTruthy();
   }));
-  
+
   describe('#getWorlds', () => {
     const getWorldsUrl = 'http://localhost:8501/v1/report/world';
     let expectedWorlds: World[];
@@ -94,5 +94,58 @@ describe('ReportService', () => {
       requests[2].flush(expectedWorlds);
     });
   });
-  
+
+  describe('#getWorld', () => {
+    const getWorldUrl = 'http://localhost:8501/v1/report/world/';
+    const worldId = 5;
+    let expectedWorld: World;
+
+    beforeEach(() => {
+      expectedWorld = { id: worldId, currentStepId: 30 };
+    });
+
+    it('should return expected world (called once)', () => {
+      reportService.getWorld(worldId).subscribe(
+        world => expect(world).toEqual(expectedWorld, 'should return expected world'),
+        fail
+      );
+
+      // ReportService should have made one request to GET worlds from expected URL
+      const req = httpTestingController.expectOne(getWorldUrl + worldId);
+      expect(req.request.method).toEqual('GET');
+
+      // Respond with the mock worlds
+      req.flush(expectedWorld);
+    });
+
+    it('should handle 404', () => {
+      const msg = 'Deliberate 404';
+      reportService.getWorld(worldId).subscribe(
+        worlds => fail('expected to fail'),
+        error => expect(error.message).toContain(msg)
+      );
+
+      const req = httpTestingController.expectOne(getWorldUrl + worldId);
+
+      // respond with a 404 and the error message in the body
+      req.flush(msg, {status: 404, statusText: 'Not Found'});
+    });
+
+    it('should return expected world (called multiple times)', () => {
+      reportService.getWorld(worldId).subscribe();
+      reportService.getWorld(worldId).subscribe();
+      reportService.getWorld(worldId).subscribe(
+        world => expect(world).toEqual(expectedWorld, 'should return expected world'),
+        fail
+      );
+
+      const requests = httpTestingController.match(getWorldUrl + worldId);
+      expect(requests.length).toEqual(3, 'calls to getWorld()');
+
+      requests[0].flush({id: worldId, currentStepId: 20});
+      requests[1].flush({id: worldId, currentStepId: 25});
+      requests[2].flush(expectedWorld);
+    });
+  });
+
 });

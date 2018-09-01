@@ -23,7 +23,8 @@ import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 public class ReportControllerTest {
 
     private static final String REPORT_GET_WORLDS_URL = "/v1/report/world";
-    private static final String REPORT_GET_URL = "/v1/report/world/{worldId}/{stepId}";
+    private static final String REPORT_GET_WORLD_URL = "/v1/report/world/{worldId}";
+    private static final String REPORT_GET_WORLD_STEP_URL = "/v1/report/world/{worldId}/{stepId}";
 
     @Autowired
     private MockMvc mvc;
@@ -53,10 +54,26 @@ public class ReportControllerTest {
     public void shouldGetWorldState() throws Exception {
         //given
         int worldId = 3;
+        int expectedStepId = 1;
+        
+        //when
+        mvc.perform( MockMvcRequestBuilders.get( REPORT_GET_WORLD_URL, worldId )
+                                            .accept( MediaType.APPLICATION_JSON_UTF8 ) )
+        //then
+                                            .andExpect( status().isOk() )
+                                            .andExpect( content().contentType( MediaType.APPLICATION_JSON_UTF8 ) )
+                                            .andExpect( jsonPath( "$.id" ).value( worldId ) )
+                                            .andExpect( jsonPath( "$.currentStepId" ).value( expectedStepId ) );
+    }
+    
+    @Test
+    public void shouldGetWorldStateInGivenStep() throws Exception {
+        //given
+        int worldId = 3;
         int stepId = 5;
         
         //when
-        mvc.perform( MockMvcRequestBuilders.get( REPORT_GET_URL, worldId, stepId )
+        mvc.perform( MockMvcRequestBuilders.get( REPORT_GET_WORLD_STEP_URL, worldId, stepId )
                                             .accept( MediaType.APPLICATION_JSON_UTF8 ) )
         //then
                                             .andExpect( status().isOk() )

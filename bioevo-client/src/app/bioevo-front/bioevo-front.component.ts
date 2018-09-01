@@ -12,7 +12,7 @@ import { ReportService, BioEvoService } from '../service';
 export class BioevoFrontComponent implements OnInit {
 
   public worlds: World[];
-  public displayedColumns: string[] = ['id', 'currentStepId'];
+  public displayedColumns: string[] = ['id', 'currentStepId', 'view'];
 
   public selectedWorldId: number;
   public errorMessage: string;

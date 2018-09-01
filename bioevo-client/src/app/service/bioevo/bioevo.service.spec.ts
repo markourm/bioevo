@@ -20,7 +20,7 @@ describe('BioEvoService', () => {
     httpTestingController = TestBed.get(HttpTestingController);
     bioEvoService = TestBed.get(BioEvoService);
   });
-  
+
   afterEach(() => {
     httpTestingController.verify();
   });
@@ -28,7 +28,7 @@ describe('BioEvoService', () => {
   it('should be created', inject([BioEvoService], (service: BioEvoService) => {
     expect(service).toBeTruthy();
   }));
-  
+
   describe('#createWorld', () => {
     const createWorldUrl = 'http://localhost:8502/v1/world';
     const worldResponse: WorldResponse = { worldId: 1 };
@@ -60,15 +60,15 @@ describe('BioEvoService', () => {
     });
 
   });
-  
-  describe('#doSteps', () => {    
+
+  describe('#doSteps', () => {
 
     it('should calculate next steps', () => {
       const worldId = 5;
       const steps = 4;
       const doStepsUrl = 'http://localhost:8502/v1/world/' + worldId + '/step/' + steps;
       const doStepsResponse = { worldId: worldId, message: 'Started calculating next ' + steps + ' step(s)' };
-    
+
       bioEvoService.doSteps(worldId, steps).subscribe(
         data => expect(data).toEqual(doStepsResponse, 'should return the world id and message'),
         fail
@@ -88,7 +88,7 @@ describe('BioEvoService', () => {
       const steps = 4;
       const doStepsUrl = 'http://localhost:8502/v1/world/' + worldId + '/step/' + steps;
       const msg = 'Deliberate 404';
-      
+
       bioEvoService.doSteps(worldId, steps).subscribe(
         data => fail('expected to fail'),
         error => expect(error.message).toContain(msg)
@@ -99,5 +99,5 @@ describe('BioEvoService', () => {
     });
 
   });
-  
+
 });

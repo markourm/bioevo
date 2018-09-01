@@ -1,0 +1,25 @@
+<p class="error" *ngIf="errorMessage">{{ errorMessage }}</p>
+<div class="world-details">
+  <mat-card class="world-details-card">
+    <mat-card-header class="world-details-header">
+      <div mat-card-avatar class="world-header-image"></div>
+      <mat-card-title class="world-details-header-title">World {{ world.id }}</mat-card-title>
+      <mat-card-subtitle class="world-details-header-subtitle">World data</mat-card-subtitle>
+    </mat-card-header>
+    <div class="world-map-image"></div>
+    <mat-card-content class="world-details-content">
+      <p>
+        Loaded world with ID {{ world.id }} and Current Step ID {{ world.currentStepId }}.
+      </p>
+    </mat-card-content>
+    <mat-card-actions>
+      <button mat-button class="world-details-step-button">Advance a step</button>
+      <button mat-button
+        class="world-details-world-list-button"
+        [routerLink]="['/bioevo-front']"
+        routerLinkActive="router-link-active" >
+          Back to worlds list
+      </button>
+    </mat-card-actions>
+  </mat-card>
+</div>

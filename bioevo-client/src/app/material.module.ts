@@ -4,6 +4,7 @@ import {
   MatInputModule,
   MatListModule,
   MatToolbarModule,
+  MatTooltipModule,
   MatIconModule,
   MatTableModule } from '@angular/material';
 import { CdkTableModule } from '@angular/cdk/table';
@@ -16,6 +17,7 @@ import { NgModule } from '@angular/core';
     MatInputModule,
     MatListModule,
     MatToolbarModule,
+    MatTooltipModule,
     MatIconModule,
     MatTableModule,
     CdkTableModule
@@ -26,6 +28,7 @@ import { NgModule } from '@angular/core';
     MatInputModule,
     MatListModule,
     MatToolbarModule,
+    MatTooltipModule,
     MatIconModule,
     MatTableModule,
     CdkTableModule

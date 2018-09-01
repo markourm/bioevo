@@ -24,6 +24,15 @@ export class ReportService {
       ) as Observable<World[]>;
   }
 
+  /** GET specified world data from the BioEvo Report Service */
+  getWorld(worldId: number): Observable<World> {
+    return this.http.get<World>(this.baseUrl + '/' + worldId)
+      .pipe(
+        tap(world => this.log('fetched world with id: ' + worldId)),
+        catchError(handleError('getWorld'))
+      ) as Observable<World>;
+  }
+
   private log(message: string) {
     console.log(`ReportService: ${message}`);
   }
