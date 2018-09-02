@@ -1,6 +1,7 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { of } from 'rxjs';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 import { commonTestingModules } from '../../../testing/common.testing';
 import { ReportService, BioEvoService } from '../../service';
@@ -52,6 +53,8 @@ describe('WorldComponent', () => {
       TestBed.configureTestingModule({
         imports: [
           BrowserAnimationsModule,
+          FormsModule,
+          ReactiveFormsModule,
           commonTestingModules
         ],
         declarations: [ WorldComponent, AdvanceStepsComponent ],
@@ -75,10 +78,6 @@ describe('WorldComponent', () => {
     it('should have World details', () => {
       const content = page.worldContent.textContent;
       expect(content).toContain('Loaded world with ID ' + worldNdx + ' and Current Step ID 1.');
-    });
-
-    it('should have button to advance World', () => {
-      expect(page.advanceButton.textContent).toContain('Advance a step');
     });
 
     it('should have button back to World list', () => {

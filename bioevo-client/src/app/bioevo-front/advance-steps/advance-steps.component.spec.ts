@@ -1,6 +1,7 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { of } from 'rxjs';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 import { commonTestingModules } from '../../../testing/common.testing';
 import { WorldResponse } from '../../model/world.response';
@@ -26,6 +27,8 @@ describe('AdvanceStepsComponent', () => {
     TestBed.configureTestingModule({
       imports: [
         BrowserAnimationsModule,
+        FormsModule,
+        ReactiveFormsModule,
         commonTestingModules
       ],
       declarations: [ AdvanceStepsComponent ],
