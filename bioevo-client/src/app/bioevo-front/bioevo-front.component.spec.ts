@@ -74,7 +74,7 @@ describe('BioevoFrontComponent', () => {
 
     it('should query worlds', () => {
       expect(errorMessage()).toBeNull('should not show error');
-      expect(getWorldsSpy.calls.any()).toBe(true, 'getWorlds called');
+      expect(getWorldsSpy.calls.any()).toBe(true, 'getWorlds() called');
     });
 
     it('should list worlds', () => {

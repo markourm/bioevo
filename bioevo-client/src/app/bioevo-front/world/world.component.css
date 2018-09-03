@@ -6,3 +6,12 @@
   background-image: url('https://material.angular.io/assets/img/examples/shiba1.jpg');
   background-size: cover;
 }
+
+.world-details-header-title {
+  font-weight: bold;
+  font-size: 200%;
+}
+
+.world-details-header-subtitle {
+  font-size: 100%;
+}

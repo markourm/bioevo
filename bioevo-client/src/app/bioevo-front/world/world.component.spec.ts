@@ -28,6 +28,7 @@ describe('WorldComponent', () => {
 
   let world: World;
   let doStepsResponse: WorldResponse;
+  let currentStep: number;
 
   const errorMessage = () => {
     const el = fixture.nativeElement.querySelector('.error');
@@ -36,7 +37,8 @@ describe('WorldComponent', () => {
 
   beforeEach(async(() => {
 
-    world = { id: worldNdx, currentStepId: 1 };
+    currentStep = 1;
+    world = { id: worldNdx, currentStepId: currentStep };
     doStepsResponse = { worldId: worldNdx, message: 'Started calculating next 5 step(s)' };
 
     reportService = jasmine.createSpyObj('ReportService', ['getWorld']);
@@ -75,9 +77,14 @@ describe('WorldComponent', () => {
       expect(page.worldHeader.textContent).toContain('World ' + worldNdx);
     });
 
+    it('should query the world', () => {
+      expect(errorMessage()).toBeNull('should not show error');
+      expect(getWorldSpy.calls.any()).toBe(true, 'getWorld() called');
+    });
+
     it('should have World details', () => {
       const content = page.worldContent.textContent;
-      expect(content).toContain('Loaded world with ID ' + worldNdx + ' and Current Step ID 1.');
+      expect(content).toContain('Loaded world with ID ' + worldNdx + ' and Current Step ID ' + currentStep + '.');
     });
 
     it('should have button back to World list', () => {
