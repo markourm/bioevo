@@ -1,4 +1,4 @@
-import { async, fakeAsync, ComponentFixture, TestBed, tick } from '@angular/core/testing';
+import { async, fakeAsync, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { of, throwError } from 'rxjs';
 import { commonTestingModules } from '../../testing/common.testing';
@@ -20,14 +20,10 @@ describe('BioevoFrontComponent', () => {
 
   let getWorldsSpy: jasmine.Spy;
   let createWorldSpy: jasmine.Spy;
-  let doStepsSpy: jasmine.Spy;
 
   let worlds: World[];
   let createWorldResponse: WorldResponse;
-  let doStepsResponse: WorldResponse;
 
-  // Helper function to get the error message element value
-  // An *ngIf keeps it out of the DOM until there is an error
   const errorMessage = () => {
     const el = fixture.nativeElement.querySelector('.error');
     return el ? el.textContent : null;
@@ -41,14 +37,12 @@ describe('BioevoFrontComponent', () => {
          ] as World[];
 
       createWorldResponse = { worldId: 2 };
-      doStepsResponse = { worldId: 2, message: 'Started calculating next 5 step(s)' };
 
       reportService = jasmine.createSpyObj('ReportService', ['getWorlds']);
       getWorldsSpy = reportService.getWorlds.and.returnValue(of(worlds));
 
       bioEvoService = jasmine.createSpyObj('BioEvoService', ['createWorld', 'doSteps']);
       createWorldSpy = bioEvoService.createWorld.and.returnValue(of(createWorldResponse));
-      doStepsSpy = bioEvoService.doSteps.and.returnValue(of(doStepsResponse));
   }));
 
   describe('BioevoFrontComponent normal flow', () => {
@@ -80,7 +74,7 @@ describe('BioevoFrontComponent', () => {
 
     it('should query worlds', () => {
       expect(errorMessage()).toBeNull('should not show error');
-      expect(getWorldsSpy.calls.any()).toBe(true, 'getWorlds called');
+      expect(getWorldsSpy.calls.any()).toBe(true, 'getWorlds() called');
     });
 
     it('should list worlds', () => {

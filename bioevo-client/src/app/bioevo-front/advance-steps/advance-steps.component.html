@@ -1,0 +1,18 @@
+<div class="advance-world">
+  <form [formGroup]="stepsForm" (ngSubmit)="advanceWorld(stepsForm)" fxLayout="column" class="advance-world-form">
+    <div fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="10px">
+        <mat-form-field fxFlex>
+          <input matInput type="number" placeholder="Steps to advance"
+            aria-label="Number of steps" formControlName="steps" class="advance-world-input-steps">
+          <mat-error *ngIf="stepsForm.get('steps').hasError('min')">Steps must be positive number</mat-error>
+          <mat-error *ngIf="stepsForm.get('steps').hasError('max')">Steps can not be greater than {{ maxSteps }}</mat-error>
+        </mat-form-field>
+    </div>
+    <div fxLayout="row" class="margin-top">
+      <div class="flex-spacer"></div>
+      <button mat-stroked-button type="submit" color="primary"
+        [disabled]="!stepsForm.valid" class="advance-world-button">Advance the world</button>
+    </div>
+  </form>
+  <p class="advance-steps-message" *ngIf="message">{{ message }}</p>
+</div>

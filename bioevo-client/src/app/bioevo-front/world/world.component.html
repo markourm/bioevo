@@ -1,5 +1,5 @@
 <p class="error" *ngIf="errorMessage">{{ errorMessage }}</p>
-<div class="world-details">
+<div class="world-details" *ngIf="world">
   <mat-card class="world-details-card">
     <mat-card-header class="world-details-header">
       <div mat-card-avatar class="world-header-image"></div>
@@ -13,7 +13,7 @@
       </p>
     </mat-card-content>
     <mat-card-actions>
-      <button mat-button class="world-details-step-button">Advance a step</button>
+      <app-advance-steps></app-advance-steps>
       <button mat-button
         class="world-details-world-list-button"
         [routerLink]="['/bioevo-front']"
@@ -22,4 +22,7 @@
       </button>
     </mat-card-actions>
   </mat-card>
+</div>
+<div class="world-loading" *ngIf="!world">
+  <p>Loading the world data</p>
 </div>

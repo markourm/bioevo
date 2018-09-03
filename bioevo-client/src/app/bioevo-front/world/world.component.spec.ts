@@ -1,5 +1,7 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-import { of, throwError } from 'rxjs';
+import { of } from 'rxjs';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 import { commonTestingModules } from '../../../testing/common.testing';
 import { ReportService, BioEvoService } from '../../service';
@@ -7,6 +9,7 @@ import { ReportService, BioEvoService } from '../../service';
 import { World } from '../../model/world';
 import { WorldResponse } from '../../model/world.response';
 import { WorldComponent } from './world.component';
+import { AdvanceStepsComponent } from '../advance-steps/advance-steps.component';
 
 let fixture: ComponentFixture<WorldComponent>;
 let component: WorldComponent;
@@ -25,6 +28,7 @@ describe('WorldComponent', () => {
 
   let world: World;
   let doStepsResponse: WorldResponse;
+  let currentStep: number;
 
   const errorMessage = () => {
     const el = fixture.nativeElement.querySelector('.error');
@@ -33,7 +37,8 @@ describe('WorldComponent', () => {
 
   beforeEach(async(() => {
 
-    world = { id: worldNdx, currentStepId: 1 };
+    currentStep = 1;
+    world = { id: worldNdx, currentStepId: currentStep };
     doStepsResponse = { worldId: worldNdx, message: 'Started calculating next 5 step(s)' };
 
     reportService = jasmine.createSpyObj('ReportService', ['getWorld']);
@@ -49,9 +54,12 @@ describe('WorldComponent', () => {
 
       TestBed.configureTestingModule({
         imports: [
+          BrowserAnimationsModule,
+          FormsModule,
+          ReactiveFormsModule,
           commonTestingModules
         ],
-        declarations: [ WorldComponent ],
+        declarations: [ WorldComponent, AdvanceStepsComponent ],
         providers:    [
           { provide: ReportService, useValue: reportService },
           { provide: BioEvoService, useValue: bioEvoService }
@@ -69,13 +77,14 @@ describe('WorldComponent', () => {
       expect(page.worldHeader.textContent).toContain('World ' + worldNdx);
     });
 
-    it('should have World details', () => {
-      const content = page.worldContent.textContent;
-      expect(content).toContain('Loaded world with ID ' + worldNdx + ' and Current Step ID 1.');
+    it('should query the world', () => {
+      expect(errorMessage()).toBeNull('should not show error');
+      expect(getWorldSpy.calls.any()).toBe(true, 'getWorld() called');
     });
 
-    it('should have button to advance World', () => {
-      expect(page.advanceButton.textContent).toContain('Advance a step');
+    it('should have World details', () => {
+      const content = page.worldContent.textContent;
+      expect(content).toContain('Loaded world with ID ' + worldNdx + ' and Current Step ID ' + currentStep + '.');
     });
 
     it('should have button back to World list', () => {

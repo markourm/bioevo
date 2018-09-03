@@ -52,7 +52,7 @@ describe('BioEvoService', () => {
       const msg = 'Deliberate 404';
       bioEvoService.createWorld().subscribe(
         data => fail('expected to fail'),
-        error => expect(error.message).toContain(msg)
+        error => expect(error.message).toContain('404 Not Found')
       );
 
       const req = httpTestingController.expectOne(createWorldUrl);
@@ -91,7 +91,7 @@ describe('BioEvoService', () => {
 
       bioEvoService.doSteps(worldId, steps).subscribe(
         data => fail('expected to fail'),
-        error => expect(error.message).toContain(msg)
+        error => expect(error.message).toContain('404 Not Found')
       );
 
       const req = httpTestingController.expectOne(doStepsUrl);
